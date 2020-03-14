@@ -343,11 +343,11 @@
             <UserClasses></UserClasses>
             <CSection></CSection>
             <UserSection></UserSection>
-            <CodeBaseAddress></CodeBaseAddress>
+            <CodeBaseAddress>0X0000-0X1FFF</CodeBaseAddress>
             <XDataBaseAddress></XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
             <BitBaseAddress></BitBaseAddress>
-            <DataBaseAddress></DataBaseAddress>
+            <DataBaseAddress>0</DataBaseAddress>
             <IDataBaseAddress>0x90</IDataBaseAddress>
             <Precede></Precede>
             <Stack></Stack>

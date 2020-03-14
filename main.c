@@ -16,6 +16,14 @@
  *
  *
  *  Project scope revision history:
+ *	  *** REV 03 ***
+ *    03-10-20 jmh:  Modified pulse() to accept U16 pulse timer (modified pulse timer also).  Rig array
+ *						still stores U8, so it must be cast when the rig type is read on power-up.
+ *					 Modified ICOM mode to use MR(TUNER) as scan up, and F-1(V/M) as scan down.  These
+ *						keys instantiate an 800ms pulse on up or dn to start the scan mode.
+ *					 Modified ICOM pulse period to 45 ms (was 40).
+ *					 Added named rig types for Kenwood and generic 100 and 125.
+ *					 Fixed several code snippets for "VERS == 1" build case.
  *	  *** REV 02 ***
  *    08-28-19 jmh:  Debug of HM151 mode.  Tested on IC-7000.  Found that the first key is ignored if no
  *						other keys are detected after.  This means that the F-2 key needn't be set to a
@@ -237,9 +245,9 @@ volatile	U8		dbounceHM_tmr;
 volatile	U8		iplTMR;				            // timer IPL init flag
 volatile	U16		press_timer;					// key press timer and flag
 volatile	U8		press_flag;						// key-press timeout flag
-			U8		pulse_delay;					// pulse delay value
+			U16		pulse_delay;					// pulse delay value
 #define	UD_PERIOD	10								// up/dn pulse period
-volatile	U8		ud_timer;
+volatile	U16		ud_timer;
 volatile	U8		xport;							// expansion port data register
 
 // bbSPI registers
@@ -313,9 +321,9 @@ code U16 key_addr[] =  {0x0b02,0x1302,0x2302,0x2202,0x0a02,0x1202,0x2002,0x1002,
 code U8 radio_fbtn[][7] = {
 //		HM133 button -->	UP  F1        VFO/LOCK     DN  MR/CALL       BAND/OPT	Pulse Delay
 //							|   |         |            |   |             |			|
-						  { UP, UP1,      UP2,         DN, DN1,          DN2,      MS40},		// 0	generic (ICOM)
+						  { UP, UP1,      UP2,         DN, DN1,          DN2,      MS45},		// 0	generic (ICOM)
 						  { UP, MH36_ACC, MH36_P1,     DN, MH36_DMR,     MH36_P2, MS100},		// 1	Yaesu MH36
-						  { UP, UP1,      UP2,         DN, DN1,          DN2,      MS80},		// 2	generic (KW) <- placekeeper for new rig type
+						  { UP, UP1,      UP2,         DN, DN1,          DN2,      MS80},		// 2	Kenwood
 						  { UP, UP1,      UP2,         DN, DN1,          DN2,     MS100},		// 3	generic (ICOM/KW) <- placekeeper for new rig type
 						  { UP, UP1,      UP2,         DN, DN1,          DN2,     MS125},		// 4	generic (ICOM/KW) <- placekeeper for new rig type
 						  { UP, UP1,      UP2,         DN, DN1,          DN2,     MS125},		// 5	generic (ICOM/KW) <- placekeeper for new rig type
@@ -323,12 +331,49 @@ code U8 radio_fbtn[][7] = {
 						  { 0,    0,        0,          0,   0,            0,         0}		// 7	HM-151 (IC-7000) -- no up/dn or other outputs supported
 					      };																	//		for this mic
 
+code U8 swopt_pattern_lut[] = {
+	// "a" = 00000001, mask = 00000010
+	0x01,
+	// "b" = 00001000, mask = 00001000
+	0x08,
+	// "c" = 00001010, mask = 00001000
+	0x0a,
+	// "d" = 00000100, mask = 00000100
+	0x04,
+	// "e" = 00000000, mask = 00000001
+	0x00,
+	// "f" = 00000010, mask = 00001000
+	0x02,
+	// "g" = 00000110, mask = 00000100
+	0x06,
+	// "h" = 00000000, mask = 00001000
+	0x00 };
+
+code U8 swopt_mask_lut[] = {
+	// "a" = 00000001, mask = 00000010
+	0x02,
+	// "b" = 00000001, mask = 00001000
+	0x08,
+	// "c" = 00000101, mask = 00001000
+	0x08,
+	// "d" = 00000100, mask = 00000100
+	0x04,
+	// "e" = 00000000, mask = 00000001
+	0x01,
+	// "f" = 00000010, mask = 00001000
+	0x08,
+	// "g" = 00000110, mask = 00000100
+	0x04,
+	// "h" = 00000000, mask = 00001000
+	0x08 };
+
 //-----------------------------------------------------------------------------
 // Local Prototypes
 //-----------------------------------------------------------------------------
 
 void process_hm(U8 flag);
-void pulse(U8 discr, U8 pcount);
+void flash_swvers(U8 pattern, U8 mask);
+void pulse(U8 discr, U8 pcount, U16 pdly);
 void outbit(U8 bitmap, U8 on);
 void send8(U8 sdata);
 U8 get_opt(void);
@@ -392,12 +437,14 @@ void main(void) //using 0
 	#endif
 		swopt = swopt & 0x07;					// isolate rig options
 //		swopt = STRAP_HM151;		// force HM151 debug
-		pulse_delay = radio_fbtn[swopt][IDX_PLSDLY]; // fetch pulse delay
+		pulse_delay = (U16)radio_fbtn[swopt][IDX_PLSDLY]; // fetch pulse delay
 		MDATA = 1;								// (i) mic data in
 		MMUTE_N	= UNMUTE_BIT;					// (o) mic mute out (act low)
 		PTTM_N = 1;								// (i) mic PTT in (act low)
 		DMUTE = 1;								// (o) rig data mute out (act hi)
+	#if	VERS == 2
 		MIC_DET_N = 1;							// (i) init mic det (act low)
+	#endif
 		// init module vars
 		iplTMR = TMRIPL;                        // timer IPL init flag
 		PCA0CPM1 &= 0xfe;						// disable CCF1
@@ -420,10 +467,13 @@ void main(void) //using 0
 		// process IPL init
 		keyh_mem = KEY_NULL;
 		hm_count = 0;
-		ptt_edge = ~PTTM_N;
 		aflag = 0;
 		softptt = 0;							// init soft PTT
+	#if	VERS == 2
 		mdet_edge = ~MIC_DET_N;					// init mic det edge to trap on IPL
+	#else
+		mdet_edge = 1;
+	#endif
 
 		#ifndef	IS_SIM							// skip DDS wait for sim
 		while(ipldds);							// wait for DDS to init
@@ -434,6 +484,13 @@ void main(void) //using 0
 		delF1 = COL4_TONE;
 		#endif
 
+		// flash version and radio select code:
+		//	 "3" = 00000011 = 0x03
+		//	mask = 00010000 = 0x10
+		flash_swvers(0x03, 0x10);				// Version 3
+		// radio select code: use LUT for pattern and mask
+		flash_swvers(swopt_pattern_lut[swopt], swopt_mask_lut[swopt]);
+		
 		if(swopt == STRAP_HM151){				// if HM151 FT mode...
 			DMUTE = 0;							// pass-thru MDATA
 			PCA0CPM2 &= ~0x40;					// fn led off (ECOM);
@@ -441,6 +498,7 @@ void main(void) //using 0
 			DMUTE = 1;							// inhibit pass-thru
 			PCA0CPM2 |= 0x40;					// fn led on (ECOM);
 		}
+		ptt_edge = ~PTTM_N;
 		// main loop
 		while(run){													// inner-loop runs the main application
 			new_events = 0;
@@ -490,7 +548,11 @@ void main(void) //using 0
 				}
 				MMUTE_N = UNMUTE_BIT;								// unmute mic
 			}
+	#if	VERS == 2
 			t = MIC_DET_N;											// grab the GPIO
+	#else
+			t = 0;
+	#endif
 			if(mdet_edge != t){										// take action if there has been a change
 				mdet_edge = t;
 				if(t){												// if mic removed, abort PTT and tones
@@ -653,21 +715,21 @@ void main(void) //using 0
 					}
 				}else{
 					if(swopt == STRAP_HM151){						// if HM151 FT mode...
-						if(i != 'M'){								// at this point, only "M" key is allowed in HM151 mode (other allowed keys have already been processed)
-							i = '\0';								// ...all others are ignored
+						if(i != 'M'){								// at this point, only "M" key is allowed in HM151 mode (other allowed
+							i = '\0';								// ... keys have already been processed) all others are ignored
 						}
 					}
 					switch(i){
 						case '/':									// up key
 							if(*(dp + HM_IDX_STAT) & HM_1STKEY){
-								pulse(radio_fbtn[swopt][IDX_UP], accum);
+								pulse(radio_fbtn[swopt][IDX_UP], accum, pulse_delay);
 								accum = 0;
 							}
 							break;
 						
 						case '\\':									// down key
 							if(*(dp + HM_IDX_STAT) & HM_1STKEY){
-								pulse(radio_fbtn[swopt][IDX_DN], accum);
+								pulse(radio_fbtn[swopt][IDX_DN], accum, pulse_delay);
 								accum = 0;
 							}
 							break;
@@ -703,26 +765,38 @@ void main(void) //using 0
 
 						case 'L':									// VFO/LOCK (HM151 = SPCH/LOCK)
 							if(*(dp + HM_IDX_STAT) & HM_1STKEY){
-								pulse(radio_fbtn[swopt][IDX_VFO], 1);
+								pulse(radio_fbtn[swopt][IDX_VFO], 1, pulse_delay);
 							}
 							break;
 
 						case 'T':									// MR/CALL (HM151 = TUNER/CALL)
-							if(*(dp + HM_IDX_STAT) & HM_1STKEY){
-								pulse(radio_fbtn[swopt][IDX_MR], 1);
+							if(swopt == STRAP_ICOM){				// if ICOM mode...long up pulse to start scan
+								if(*(dp + HM_IDX_STAT) & HM_1STKEY){
+									pulse(radio_fbtn[swopt][IDX_UP], 1, MS800);
+								}
+							}else{
+								if(*(dp + HM_IDX_STAT) & HM_1STKEY){
+									pulse(radio_fbtn[swopt][IDX_MR], 1, pulse_delay);
+								}
 							}
 							break;
 
 						case 'X':									// BND/OPT (HM151 = XFC)
 							// toggle DMUTE on v001 hardware
 							if(*(dp + HM_IDX_STAT) & HM_1STKEY){
-								pulse(radio_fbtn[swopt][IDX_BAND], 1);
+								pulse(radio_fbtn[swopt][IDX_BAND], 1, pulse_delay);
 							}
 							break;
 
 						case 'V':									// F1 (HM151 = V/M)
-							if(*(dp + HM_IDX_STAT) & HM_1STKEY){
-								pulse(radio_fbtn[swopt][IDX_F1], 1);
+							if(swopt == STRAP_ICOM){				// if ICOM mode...long dn pulse to start scan
+								if(*(dp + HM_IDX_STAT) & HM_1STKEY){
+									pulse(radio_fbtn[swopt][IDX_DN], 1, MS800);
+								}
+							}else{
+								if(*(dp + HM_IDX_STAT) & HM_1STKEY){
+									pulse(radio_fbtn[swopt][IDX_F1], 1, pulse_delay);
+								}
 							}
 							break;
 
@@ -763,10 +837,51 @@ void main(void) //using 0
 // *********************************************
 
 //-----------------------------------------------------------------------------
+// flash_swvers() uses ms timer to pulse out Morse data on LED
+//	"pattern" is dit(0) or dah(1).  1st element is pointed to by "mask"
+//		subsequent elements are toward the LSb of pattern (mask is right shifted
+//		to reach next element).  When mask == 0, character is done.  There is
+//		a DAH delay on entry and exit.
+//-----------------------------------------------------------------------------
+	
+#define	MORSE_PER	MS100	// dit period
+
+void flash_swvers(U8 pattern, U8 mask){
+	U8	j = 0;			// temp vars
+volatile	U8	k = mask;		// vers pattern temps
+
+	PCA0CPM2 &= ~0x40;								// led dim (ECOM)
+	ud_timer = (3 * MORSE_PER);
+	while(ud_timer != 0L);
+	do{
+		PCA0CPM2 &= ~0x40;							// led dim (ECOM)
+		ud_timer = MS100;
+		while(ud_timer != 0L);
+		PCA0CPM2 |= 0x40;							// led brt (ECOM)
+		if(pattern & k){
+			ud_timer = (3 * MORSE_PER);
+		}else{	
+			ud_timer = MORSE_PER;
+		}
+		k = k >> 1;
+		while(ud_timer != 0L);
+		j = got_hmd();
+		j |= ~PTTM_N;
+	}while((j == 0) && k);
+	if(j == 0){										// if there was no keypress or ptt, delay
+		PCA0CPM2 &= ~0x40;							// led dim (ECOM)
+		ud_timer = (3 * MORSE_PER);
+		while(ud_timer != 0L);
+	}
+	PCA0CPM2 |= 0x40;								// led brt (ECOM)
+	return;
+}
+
+//-----------------------------------------------------------------------------
 // pulse() uses ms timer to pulse discretes pcount pulses
 //-----------------------------------------------------------------------------
 
-void pulse(U8 discr, U8 pcount){
+void pulse(U8 discr, U8 pcount, U16 pdly){
 	U8	i;		// temp vars
 	U8	j;
 
@@ -786,11 +901,11 @@ void pulse(U8 discr, U8 pcount){
 	for(i=0; i<j; i++){
 		PCA0CPM2 &= ~0x40;							// led dim (ECOM)
 		outbit(discr, 1);
-		ud_timer = pulse_delay;
+		ud_timer = pdly;
 		while(ud_timer);
 		PCA0CPM2 |= 0x40;							// led brt (ECOM)
 		outbit(discr, 0);
-		ud_timer = pulse_delay;
+		ud_timer = pdly;
 		while(ud_timer);
 		if(got_hmd()){
 			i = j;									// a keypress detected, abort
@@ -886,7 +1001,6 @@ U8 get_opt(void){
 	rtn = ~rtn & 0x07;								// convert to pos logic
 	return rtn;
 }
-#endif
 
 //************************************************************************
 // wait() waits the U8 value then returns.
@@ -897,6 +1011,7 @@ void wait(U8 wvalue){
 	while(waittimer);								// wait for it to expire
 	return;
 }
+#endif
 
 
 // ******************* HM keypress capture ******************

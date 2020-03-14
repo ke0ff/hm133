@@ -91,9 +91,9 @@
 // strap option mode defines
 #define	STRAP_ICOM		0x00			// ICOM generic strap (works for Kenwood also)
 #define	STRAP_YAESU		0x01			// Yaesu MH36
-//#define	STRAP_???		0x02			// reserved-future
-//#define	STRAP_???		0x03			// reserved-future
-//#define	STRAP_???		0x04			// reserved-future
+#define	STRAP_KENW		0x02			// Kenwood
+#define	STRAP_G100		0x03			// Generic, 100ms u/d
+#define	STRAP_G125		0x04			// Generic, 125ms u/d
 //#define	STRAP_???		0x05			// reserved-future
 //#define	STRAP_???		0x06			// reserved-future
 #define	STRAP_HM151		0x07			// ICOM HM151/IC-7000
@@ -137,6 +137,7 @@
 #define MS25        	(25/MS_PER_TIC)
 #define MS35        	(35/MS_PER_TIC)
 #define MS40        	(40/MS_PER_TIC)
+#define MS45        	(45/MS_PER_TIC)
 #define MS50        	(50/MS_PER_TIC)
 #define MS80        	(80/MS_PER_TIC)
 #define MS100        	(100/MS_PER_TIC)
@@ -146,6 +147,7 @@
 #define MS450       	(450/MS_PER_TIC)
 #define MS500       	(500/MS_PER_TIC)
 #define MS750       	(750/MS_PER_TIC)
+#define MS800       	(800/MS_PER_TIC)
 #define MS1000      	(1000/MS_PER_TIC)
 #define MS1500      	(1500/MS_PER_TIC)
 #define MS1650      	(1650/MS_PER_TIC)
