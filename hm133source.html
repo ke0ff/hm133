@@ -1,0 +1,215 @@
+
+<!-- saved from url=(0039)http://www.rollanet.org/~joeh/projects/ -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 11">
+<meta name="Originator" content="Microsoft Word 11">
+<link rel="File-List" href="http://www.rollanet.org/~joeh/projects/index_files/filelist.xml">
+<link rel="Edit-Time-Data" href="http://www.rollanet.org/~joeh/projects/index_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title align="CENTER">The HM-133/151 DTMF Adapter SW Repo Page</title>
+<meta name="description" content="Source Code Repo for the HM-133 DTMF Adapter designed by Joe Haas, KE0FF.">
+<meta name="keywords" content="C,Source Code Repo,Replacement Microphone,HM-133,HM-151,IC-7000,ICOM,Kenwood,Yaesu,Dual Tone Multi-Frequency,DTMF,FM,Repeater Control,
+MH-36,MC-44DM,MC-44DME,C8051F530,RJ-45 Microphone,HM-133 Modifications">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>J</o:Author>
+  <o:LastAuthor>J</o:LastAuthor>
+  <o:Revision>7</o:Revision>
+  <o:TotalTime>5</o:TotalTime>
+  <o:Created>2012-12-20T18:22:00Z</o:Created>
+  <o:LastSaved>2012-12-20T22:32:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>475</o:Words>
+  <o:Characters>2714</o:Characters>
+  <o:Company> DACINT</o:Company>
+  <o:Lines>22</o:Lines>
+  <o:Paragraphs>6</o:Paragraphs>
+  <o:CharactersWithSpaces>3183</o:CharactersWithSpaces>
+  <o:Version>11.9999</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:1021979350;
+	mso-list-template-ids:450297508;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:14.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--></head><body bgcolor="white" background="../index_files/ffback.JPG" lang="EN-US" link="blue" vlink="blue" style="tab-interval:.5in"><header></header><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+
+
+
+
+<div class="Section1">
+
+<div class="MsoNormal" align="center" style="text-align:center">
+
+<hr size="2" width="100%" align="center">
+
+</div>
+
+<div class="MsoNormal" align="center" >
+
+<h2 align="center" style="text-align:center">HM-133/151 DTMF Microphone Project SW Repo Page</h2>
+
+<p class="MsoNormal">Updated 11/23/2019 </p>
+<a href="./index.html">(Back to the HM133/151 Project page...)</a>
+
+<hr size="2" width="100%" align="center">
+
+</div>
+
+<!--<p class="MsoNormal" align="center" style="text-align:center"><img width="483" height="839" id="_x0000_i1026" src="./hm133_banner.jpg"> -->
+<center>
+<table border="0" width="1300">
+<tr>
+<td>
+<img width="161" height="280" id="_x0000_i1026" src="./hm133_banner.jpg">
+</td>
+<td>
+<img width="40" height="20" id="_x0000_i1026" src="./space40.png">
+</td>
+<td>
+<center>
+<font size = "6">
+This page provides support information for the HM-133 DTMF Adapter Project Software Source Code</p>
+</center>
+<font size = "4">
+
+This is a small adapter that allows the HM-133 (or HM-151) to act as a general purpose, DTMF microphone.</p>
+
+A small microcontroller is used to capture digital information from the HM-133 and convert the keypresses into
+DTMF tones.  In addition, function buttons are implemented to allow accessory buttons on some radios to be
+supported.  A status LED (that can be located in the microphone, if desired) indicates when keypresses are
+detected and stays off while the mic audio is muted for tone generation or tone guard time.  The brightness of
+the LED is adjustable using the HM-133 keypad to allow comfortable operation day or night.  Lastly, a "macro
+mode" allows the up or down buttons to be pulsed up to 99 times to facilitate long frequency moves, or known
+steps through memories.<br><br>
+
+The source code repo is available at my <a href="https://github.com/ke0ff/HM133_DTMF_Adapter" target="_blank">HM133 Github location</a>.<br><br>
+The openscad cover code repo is also available at my <a href="https://github.com/ke0ff/HM133_DTMF_Adapter_3D-Cover" target="_blank">HM133 cover Github location</a>.<br>
+
+</td>
+</tr>
+</table>
+</center>
+
+
+<div class="MsoNormal" align="center" style="text-align:center">
+
+<hr size="2" width="100%" align="center">
+
+</div>
+
+</body></html>

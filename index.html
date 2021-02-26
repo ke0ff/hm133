@@ -1,0 +1,473 @@
+
+<!-- saved from url=(0039)http://www.rollanet.org/~joeh/projects/ -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 11">
+<meta name="Originator" content="Microsoft Word 11">
+<link rel="File-List" href="./index_files/filelist.xml">
+<link rel="Edit-Time-Data" href="./index_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title align="CENTER">The HM-133/151 DTMF Adapter Page</title>
+<meta name="description" content="Circuit theory, software theory of operation, assembly, and operation of the HM-133 DTMF Adapter designed by Joe Haas, KE0FF.">
+<meta name="keywords" content="Replacement Microphone,HM-133,HM-151,IC-7000,ICOM,Kenwood,Yaesu,Dual Tone Multi-Frequency,DTMF,FM,Repeater Control,
+MH-36,MC-44DM,MC-44DME,C8051F530,RJ-45 Microphone,HM-133 Modifications">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>J</o:Author>
+  <o:LastAuthor>J</o:LastAuthor>
+  <o:Revision>7</o:Revision>
+  <o:TotalTime>5</o:TotalTime>
+  <o:Created>2012-12-20T18:22:00Z</o:Created>
+  <o:LastSaved>2012-12-20T22:32:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>475</o:Words>
+  <o:Characters>2714</o:Characters>
+  <o:Company> DACINT</o:Company>
+  <o:Lines>22</o:Lines>
+  <o:Paragraphs>6</o:Paragraphs>
+  <o:CharactersWithSpaces>3183</o:CharactersWithSpaces>
+  <o:Version>11.9999</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:1021979350;
+	mso-list-template-ids:450297508;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:14.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--></head><body bgcolor="white" background="../index_files/ffback.JPG" lang="EN-US" link="blue" vlink="blue" style="tab-interval:.5in"><header></header><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+
+
+
+
+<div class="Section1">
+
+<div class="MsoNormal" align="center" style="text-align:center">
+
+<hr size="2" width="100%" align="center">
+
+</div>
+
+<div class="MsoNormal" align="center" >
+
+<h2 align="center" style="text-align:center">HM-133/151 DTMF Microphone Project Page</h2>
+
+<p class="MsoNormal">Updated 08/24/2020 </p>
+<a href="../index.html">(Back to the Projects page...)</a>
+
+<hr size="2" width="100%" align="center">
+
+</div>
+
+<!--<p class="MsoNormal" align="center" style="text-align:center"><img width="483" height="839" id="_x0000_i1026" src="./hm133_banner.jpg"> -->
+<center>
+<table border="0" width="1300">
+<tr>
+<td>
+<img width="483" height="878" id="_x0000_i1026" src="./hm133_banner.jpg">
+</td>
+<td>
+<img width="40" height="20" id="_x0000_i1026" src="./space40.png">
+</td>
+<td>
+<center>
+<font size = "6">
+<a href = "./ic901rch.html">!! New: A Bluetooth add-on for the ICOM IC-901A !!</a></br></br>
+This page provides support information for the HM-133 DTMF Adapter Project</p>
+</center>
+<font size = "4">
+
+This is a small adapter that allows the HM-133 (or HM-151) to act as a general purpose, DTMF microphone.</p>
+
+A small microcontroller is used to capture digital information from the HM-133 and convert the keypresses into
+DTMF tones.  In addition, function buttons are implemented to allow accessory buttons on some radios to be
+supported.  A status LED (that can be located in the microphone, if desired) indicates when keypresses are
+detected and stays off while the mic audio is muted for tone generation or tone guard time.  The brightness of
+the LED is adjustable using the HM-133 keypad to allow comfortable operation day or night.  Lastly, a "macro
+mode" allows the up or down buttons to be pulsed up to 99 times to facilitate long frequency moves, or known
+steps through memories.</p>
+
+The project can be built from scratch, but PCBs and partial kits will likely be available.  The partial kits
+feature all of the top SMD parts soldered including a programmed microcontroller.  The remaining parts
+are provided and are installed by the kit builder.  Fully assembled units are not likely to be available.  Adapter
+cables that join the adapter to the radio must be provided by the builder.  These cables use standard components,
+however, which can be easily obtained from several sources.</p>
+
+While software skills and tools are not required, the Software link below provides instructions 
+to obtain the source code for this project.  Links to the tools needed to compile and program 
+the <a href="http://www.silabs.com">SiLabs</a> C8051F530 microcontroller used for this project are provided below.</p>
+<font size = "5">
+<a href = "index.html#synopsys">"Of Mics and Men": A brief synopsys.</a></p>
+<a href = "index.html#hw">"The Meat": Detailed hardware design</a></p>
+<a href = "index.html#sw">"The Potatoes": Detailed software design</a></p>
+<a href = "index.html#kit">"Fine Dinning in the Cafeterium": Kit ordering and assembly</a></p>
+<a href = "index.html#hm133">"ICOM in pieces (take me to your Leader)": HM-133/151 Modifications</a></p>
+</td>
+</tr>
+</table>
+</center>
+
+
+<div class="MsoNormal" align="center" style="text-align:center">
+
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>A Brief Synopsis... <a name = "synopsys"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+<td>
+<font size = "4">
+This project was born of a measure of desire and serendipity. I have an ICOM IC-7000 which uses an HM-151 microphone. As capable as the radio is, it cannot easlily generate DTMF signaling with the HM-151 (one must program DTMF "memories" to send DTMF tones, which involves several steps). This seems like a significant oversight for a radio that can operate on FM repeater frequencies in the VHF/UHF spectrum. Such is the desire. 
+</p>
+The serendipity came from a recent acquaintance that shares my affinity for the ICOM IC-901. He had a problem locating a DTMF mic for his radio, which got me to thinking, “If I needed a DTMF microphone, what options might I have?” While there are some new models out there, they seemed to be a bit difficult to find with ease. Having several ICOM HM-133 and HM-151 microphones lying around, it seemed like an interesting project to see if they could be adapted to create DTMF signals. 
+</p>
+A few years ago, I was interested in decoding my HM-151 key-data output for other reasons, and I was aided in this task by the efforts of K4JCW with regard to the HM-133 (which is very similar to the HM-151), which he posted in a very helpful manner on his <a href="http://tinymicros.com/wiki/Icom_HM-98/HM-133_Internals">tinymicros wiki page</a>. This led me to write a decoder application for an ARM-based radio controller I have been working on for some time, so the code for this was a done deal, so to speak. DDS (Direct Digital Synthesis) tone generation is something I’ve been doing for decades, so this was also an easy task. I chose a small 8051 MCU that I’ve used in the past and designed the necessary circuits to capture the HM data, merge the DTMF signals with the microphone audio, and squeeze it all into as small an area as practical.
+</p>
+This web page details the hardware and software design for this project, and serves as a repository for detailed information relating to its construction and use. 
+</p>
+</td>
+</tr>
+</table>
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>Hardware Design... <a name = "hw"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+<td>
+<font size = "4">
+
+The C8051F530 is an MCU I’ve used on several other projects, so it was near the top of my short list.  Turns out, it was a really short list.  I only needed some timer resources and some way to implement a DAC, and all of these features are capable on the F530.  In addition, it has a comparator peripheral which eliminated the need for an extra part.  The comparator is needed to capture the serial data from the microphone.  The serial data is rather odd in that it features a mark at about 3V and a space at about 1.8V.  The comparator helps “limit” the signal so that the edges can be detected by the MCU GPIO pin logic.  The comparator output is then fed to a timer pin which is used to capture the bit edges for decoding in software.
+</p>
+The F530 doesn’t have a DAC, but it can do PWM which is a good 2nd choice.  A pair of timers are used to generate a PWM digital to analog converter and drive the DDS interrupt. The PWM rate is set high, 24KHz, to ease the PWM filter requirements.  The PWM signal is filtered with a pair of RC low-pass networks (using R33/C15 and R19/C16), then fed to a 1K pot for level adjustment.  A single-device analog switch is used to connect the resulting signal to the MIC signal of the target radio.  This SPDT switch has its common connection at the rig and selects either MIC or TONE at the control of the MCU.
+</p>
+If only UP/DOWN buttons were needed, the MCU would have enough GPIO to drive them, but many microphones feature “function” buttons which connect a particular resistance value from the up or down rig signal to GND.  This is a simple method of multiplexing the function selections through just two (or one) connection to the rig.  Since the F530 is out of pins, a CD4094 shift register was used as a port expander to drive the PTT, up, down, and function selections.  Each CD4049 output is mapped as a function to FET transistors that act as low Rds(on) buffers for the series resistors that are installed per the target radio/microphone.  For example, most of the (older) ICOM radios use 0 Ω for UP and 470 Ω for DOWN.  Other resistor combinations are described in the schematic notes.
+</p>
+A second analog switch is used to gate the microphone data (MDATA) signal to the radio.  This is primarily targeted at the IC-7000 but can be applied to any radio that uses the HM-151.  This allows a means by which the DTMF keys may be pressed without sending potentially confusing data to the radio.  Q6B and R31 set the termination resistance for the MDATA signal when there is no target radio to provide this required termination.  This is either in the case of a generic radio interface, or for the IC-7000 when the adapter is configured to generate tones.
+</p>
+A status LED is provided which is driven by a dedicated PWM output from the MCU.  By using a PWM to drive the LED, its brightness can be easily controlled.  Software option straps are provided to allow up to 8 different operating modes (DMUTE and MMUTE outputs are multiplexed as inputs on reset to read the state of two of the strap bits).  The reminder of the design is rounded out with a 5V LDO voltage regulator, EMI ferrite beads, and some components to support in-circuit programming of the MCU.
+</p>
+</td>
+</tr>
+</table>
+<center>
+<a href="hm133dtmfschem.pdf"><img width="695" height="521" src="./hm133sch-003thmb.jpg"></a>
+</p>
+<h3>HM-133 DTMF Adapter Schematic and Parts List</h3>
+<h4>(click on image to see a pdf version)</h4>
+</center>
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>Software Design... <a name = "sw"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+<td>
+<font size = "4">
+
+The software operates in a single loop which polls for serial data from the mic and parses it into actions (either tones or GPIO pulses).  
+It depends heavily on interrupts to allow a simple polling loop, real-time control system.  The software supports UP, DOWN, and 4 “function” buttons as well as the standard 4x4 DTMF key layout.  A 1KHz tone function is also provided.  The status LED blinks when a key is pressed and is turned off when the microphone is muted.
+</p> 
+There are three timer interrupts, and one Programmable Counter/timer Array (PCA) interrupt.  The timer interrupts are all configured in a similar manner with timer 0 providing part of the bit-bang SPI function, timer 1 handles the code to process the DDS tone generator, and timer 2 provides a series of count-down-from-N-and-halt application timers.  The PCA captures MDATA edges and parses them into a 32-bit result which contains information on mode and key-ID.
+</p>
+Timers 0 and 2 are not particularly engaging, they perform a simple task, in a simple manner.  Timer 1 is a little more interesting but is still relatively straightforward.  It implements a simple, 2-tone DDS generator that is phase-accumulator based (see <a href="https://www.nxp.com/docs/en/application-note/AN1771.pdf">NXP's AN1771</a> for a detailed treatise on the subject).  For the DAC, one of the PCA PWMs is used, but not as an interrupt.  The idea is that since timer 1 and the PCA run off of the same clock base, they will remain synchronized.  This allows the DDS algorithm to write updates to the PWM without worrying about pop-noise that can occur if the update isn’t precisely aligned to the DDS sample clock.
+</p>
+The PCA interrupt is the most complicated ISR in this project.  It captures timing edges and then parses them into 1’s or 0’s which are shifted into the result register.  
+The ICOM protocol uses a sync header to signify the start of a frame.  For simplicity, the bit timing is hard-coded.  A better solution would be to use the sync frame to 
+establish the timing reference and calculate the bit gates from the sync timing.  While three microphones is not a fair sample, I am 3 for 3 at present, so dynamic sync frame 
+timing is penciled-in for a future embellishment.
+</p>
+A three-deep buffer is used to communicate the captured MDATA register up to the application level.  This is a vestige of the original ARM application which featured a much deeper buffer.  Three keys is likely overkill, but takes just a little memory and provides some leeway for unforeseen key-press scenarios.
+</p> 
+The main application initializes the GPIO and peripherals, and then enters the main process loop (MPL).  Actually, there are two nested loops in main().  The outer loop holds the initialization code, which is followed by the MPL.  This allows the MPL to break out and essentially restart the main() function, facilitating a software reset.  This is performed whenever the microphone detect signal indicates that the microphone has been removed.  The most important artifact of this is that the PTT will be reset preventing the radio from being inadvertently locked into the TX state with the microphone no longer present.
+</p>
+Since this is a real-time system, it is important to limit how much time a particular operation can take.  The judicious use of interrupts has off-loaded much of the low-level operations.  The MPL must take the various inputs and act upon them.  Some use of local timing loops is employed, but only where the time value is an isolated and short one, or there is some other means for breaking out of the timing operation.  Since the application is relatively straightforward, the use of an RTOS was not viewed as an efficient option for such a small (8K) MCU.
+</p>
+The code is a bit complicated in the MPL.  This is largely due to the fact that the system must accommodate two sources of PTT (a logic input, in the case of the HM-151, and 
+an MDATA message in the case of the HM-133) and also the behavior of the HM-133 when sending DTMF key codes.  Oh, and the up to 8 different operating modes.  Getting the HM-133 
+DTMF-S mode to work with the HM-151 hard-wired PTT was a bit of a challenge.  
+In addition, the microphone mute needed to be “sticky”, with a timer to cancel the mute after the appropriate span of time had elapsed from the last key release.
+</p>
+The logic PTT and microphone detect are processed at the top layer of the MPL.  If a keypress is detected (as signaled by a new keycode being present in the input buffer), 
+the second layer is entered.  This is where the key is processed.  All of the keys on the HM-133/151 microphones repeat except for the HM-133 PTT.  This fact is employed in the 
+software to detect when a key has been released.
+</p>
+For the purposes of this application, the keys on the microphone are grouped into two categories: DTMF keys, and function keys.  The DTMF keys have multiple functions, depending on the state of the system.  If the PTT is active, a DTMF key will issue the appropriate tone.  If PTT is inactive, numeric digits are entered into an “accumulator” that can accommodate two digits that represent 99 or less.  “*” or “#” set the status LED to be bright or dim.  “*”, “#”, or the 4th DTMF row all clear the accumulator.
+</p>
+In the case of the HM-133, the microphone must be in “DTMF-S” mode to generate DTMF tones.  In this case, PTT is not needed.  The software detects the key and issues the tone.  When finished, PTT is released, even if it is still pressed.  Unfortunately, this is how the HM-133 works, to the best I can tell, so I haven’t found any way to improve upon the behavior.  This isn’t an issue with the HM-151.
+</p>
+The accumulator is used when the UP or DOWN buttons are pressed.  The system will pulse the appropriate logic output by the number of times defined in the accumulator (if the accumulator is “0”, 1 pulse occurs).
+</p>
+The object code for the adapter is available <a href="hm133hex.zip">here</a>.  The <i><a href="../Orion/silabspgm.pdf">"SiLabs Programming guide"</a></i> describes 
+the steps and items needed to program the project MCU.  The <a href="hm133source.html">source code page</a> describes where and how to access the source repo.  
+</p>
+
+</td>
+</tr>
+</table>
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>The Kit... <a name = "kit"></a></h2>
+<!--367,105 -->
+<img width="734" height="210" src="adapterpicsm.jpg"></p>
+<!--698,465 -->
+<img width="698" height="465" src="hm133covered.jpg">
+</p>
+<table border="0" width="900">
+<tr>
+</center>
+<td>
+<font size = "4">
+
+With the exception of the radio microphone connector, all of the components for this project can be ordered from www.mouser.com or the electronic retailer of your choice.  
+An e-mail to me is the current means by which to order PCBs (see the pdf documents referenced on this page for the e-mail address).  Gerber files are provided, so you may 
+order your own set from your favorite PCB FAB.  A programming adapter for the SiLabs 
+chips ($35 from Mouser, et.al.) is needed as well as an adapter cable that must be fabricated by the builder.
+The programming adapter cable converts the 10-pin dual row programming cable to the 6-pin, small form-factor connector used on the DTMF Adapter to save space (instructions 
+on constructing are found in the <i><a href="../Orion/silabspgm.pdf">"SiLabs Programming guide"</a></i>).
+</p>
+The DTMF adapter features a number of fine-pitch ICs and transistors along with several 0402 (and larger) chip-parts, so if you have never soldered SMD parts this small, or 
+have difficulty doing so, this is not a good option.
+A partial-kit is an option that I have pursued with reasonable success for my Orion PLL and will likely give this a try for this project.  The goal is to partially 
+assemble the modules (top SMD parts only) offshore.  The parts that remain would be bottom side SMD parts (all 0603 or larger), and top-side thru-hole parts.  This makes it 
+reasonable to complete the assembly for most folks who know how to solder, while keeping the assembly costs at a minimum.
+</p>
+This approach requires a certain level of interest before I can commit to paying (up-front, no less) for the assembly of a number of units.  As of this writing, about 15 or so pieces is the expected threshold.  Once enough interest develops, it could take as long as 6 weeks to receive all of the materials from which to assemble the kits and get them shipped.  This isn’t intended to be a business operation, so please don’t anticipate the response times you might expect when dealing with a for-profit enterprise. 
+</p>
+For the moment, I can only promise that PCBs should be available along with the data on this page, which includes an <a href="hm133dtmfmanual.pdf"><i>"Assembly and Operations Manual"</i></a>.
+</p>
+</td>
+</tr>
+</table>
+</table>
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>HM-133/151 Modifications... <a name = "hm133"></a></h2>
+<img width="276" height="162" src="hm133front.jpg">
+<img width="276" height="162" src="hm151front.jpg">
+</p>
+<table border="0" width="900">
+<tr>
+</center>
+
+<td>
+<font size = "4">
+I am not particularly “over the moon” for the HM-133/151, but I have figured it out (mostly) and that figures prominently in my choices.  If I KNOW a thing, I can mitigate its faults and make it be useful.  In this case, it allows for a feature-rich command keyboard that fits in the palm of your hand.  It also converts speech to an electrical signal, so you kill two birds with one stone.
+</p>
+Now, the faults.  The audio of the HM-133 leaves something to be desired.  Mostly, due to its variability.  I have two HM-133 microphones, and one is MUCH hotter 
+than the other.  This is often reported on the internet as well.  Looking at he schematic, there is only one way for this to happen: the electret element is more 
+or less sensitive in one or both (some have reported that the felt cover on their element had too much glue, but I did not experience that effect).  And not by a little, but more like an 18 dB difference (this figure was measured by a sketchy apparatus of the author’s creation, 
+but I’ll only entertain a handful of dB uncertainty, which still yields a significant difference).
+<p>
+The other is the wonky PTT behavior.  The HM-151 doesn’t have this limitation.  The keys behave exactly the same regardless of the PTT state (because the MCU in the microphone doesn’t ever see the PTT signal).
+</p>
+Lastly, the mass.  The HM-133 is very light, only about 70g (minus the cord), this holds true for the HM-151 as well.  So light, in fact, that it just *feels* wrong.  By comparison, an HM-14 microphone head (less the cord) is about 90g.  Still light but headed in the right direction.
+</p>
+I’ll handle these in reverse order.  The mass is easy to fix, just add ballast.  I’ve used lead sheet and sinker weights.  Either way, I encase the ballast in epoxy (JB Weld is my personal favorite).  For the three microphones I have modified, I have added an average of 100g of ballast to the back-shells.  The main concern is making sure you leave clearance for the parts on the microphone PCB.
+</p>
+Next, the PTT.  This one requires a careful choice.  If you have a radio that uses the HM-133, modifying the PTT means that the microphone will not likely work on radios to which it would normally connect (there is a chance that the radio looks for a hard-wired PTT, but I can’t guarantee more than that).  The modification is simple, cut the traces running to the PTT switch and run a jumper wire from one side of the switch to pin 4 of the microphone connector.  The other side of the switch goes to GND.  At this point, the HM-133 behaves like an HM-151.  The only difference is that the modified switch lacks two buttons that are present on the HM-151.  Or, rather, it lacks their logic.  The DTMF-S and FUNC buttons still retain their HM-133 functions.
+</p>
+The electret element is the most difficult item to address.  Since the source stimulus is sound, the only way to characterize a microphone element is to use some consistent source of sound.  Such things are not difficult to contrive, but there are many subtleties that can easily escape one’s grasp.  My Mark-II contrivance was used to reasonable effect.  It is simply a closed, cardboard box with a small speaker suspended inside, and a small hole cut directly opposite the speaker.  A function generator is used to drive the speaker with a 1 KHz tone, and a service monitor is used to read the resulting deviation that occurs when all of the relevant parts are brought together.
+</p>
+After several candidate elements, I settled on one that seemed to be reasonably close to the response I got with my HM-14 and HM-151.  Of course, one could simply adjust the radio.  For a one-off radio-to-mic application, there is nothing wrong with this approach.  For a multi-radio suite, where microphones might move on occasion, such a solution is not as attractive.  Ultimately, the choice is up to the user.
+</p>
+A final modification is to place an LED (I prefer blue, they are bright and contrast with the other colors used on the HM-133/151) inside the microphone to reflect the state of the adapter status.  This is a more convenient location than having to look at the adapter but requires some fine-motor soldering skills to accomplish.  Pin 2 of the microphone connector routes to the appropriate drive location on the adapter.
+</p>
+<center>
+<img width="186" height="319" src="hm151_keys_sm.jpg">
+</center>
+</p>
+See <a href="hm133mods.pdf"><i>"HM-133 Microphone Modifications"</i></a> for photos and procedures for the various microphone modifications discussed herein.
+</p>
+</td>
+</tr>
+</table>
+<hr size="2" width="100%" align="center">
+</div>
+
+<center>
+<h2>La Fin... <a name = "hm133"></a></h2>
+</p>
+<table border="0" width="900">
+<tr>
+</center>
+
+<td>
+<font size = "4">
+As my ham projects tend to go, this one is an outlier...concept to complete in less than 2 months is quite a feat for me.  The result is mostly favorable.  There is a nagging problem whereby the key data bleeds into the microphone signal.  There are only a few situations where this comes into play, and is seems to be happening in the HM-133/151 circuits (I have now confirmed that this issue exists on the IC-7000 with no DTMF adapter involved, so it is definitely an effect present in the microphone itself).  I have made some effort to isolate the issue, but have had no luck.  Other than this, the device seems to behave rather well and actually does what it is supposed to do.
+</p>
+The heat-shrink covering is a stopgap.  It gets the job done, but a 3D-printed case would be "nicer".  I have a 3D print model for one available on the <a href="hm133source.html">HM133 DTMF Adapter Object Code</a> page.
+It needs a tweek or two, but as modled, I have gotten one of them to work well enough.  The main issue is that the nibs on the locking tabs need to be extended a "scosh" (maybe 20 - 50 mils, give or take).
+If I get time to circle back on that issue, I will update the github repo accordingly.  The design is a clamshell, two identical pieces come together to make one cover.  Excpect a lot of
+carving, sanding, and sealing by the time you are done.  Here is a gander at my one attempt:<br><br>
+
+<!--696,513 -->
+<center><img width="696" height="513" src="hm133Dcovered.jpg"></center>
+
+</p>
+Not bad, but as I said, it needs some tweaks.  A couple of small pieces of "squishy" silicone are recomended to keep the PCB from rattling inside the cover.  Other materials may be used,
+but most generally break-down over the span of a few years and you are left with either a hard piece of shriveled stuff, or a crumbly mess.  The primary shortcoming is that it is difficult
+to identify the radio or mic end of the dongle.  The 3D model attempts to address this with "RIG" and "MIC" structures in the bottom face of the print.  However, the printer I used filled
+these in with support, so the result is not as obvious as one would like.  Still, it is observable.  Better knowledge of the printer setup options might cure this, but that will vary from
+one printer to another.
+</p>
+<br>
+Here is a listing of the various project documents that are directly relevant to the DTMF Adapter:
+</p>
+</td>
+</tr>
+</table>
+
+<table border="0" width="500">
+<tr>
+
+<td>
+<font size = "4">
+<a href="hm133source.html">HM133 DTMF Adapter Source Code Page</a> </p>
+<a href="hm133hex.zip">HM133 DTMF Adapter Object Code</a> </p>
+<a href="../Orion/silabspgm.pdf">SiLabs Programming guide</a> </p>
+<a href="hm133dtmfmanual.pdf">HM133 DTMF Adapter Assembly and Operations Manual</a> </p>
+<a href="hm133dtmfschem.pdf">HM133 DTMF Adapter -003 Schematic</a> </p>
+<a href="hm133dtmfdsn.zip">HM133 DTMF Adapter Design -003 (Protel99 SE)</a> </p>
+<a href="hm133dtmfgerbers.zip">HM133 DTMF Adapter PCB -003 Gerber Files</a> </p>
+<a href="hm133mods.pdf">HM-133/151 Microphone Modifications</a> </p>
+</td>
+</tr>
+</table>
+
+<hr size="2" width="100%" align="center">
+</div>
+
+
+</center>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto"><o:p>&nbsp;</o:p></p>
+
+</div>
+
+
+
+
+</body></html>

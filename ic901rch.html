@@ -1,0 +1,526 @@
+
+<!-- saved from url=(0039)http://www.rollanet.org/~joeh/projects/ -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Microsoft Word 11">
+<meta name="Originator" content="Microsoft Word 11">
+<link rel="File-List" href="http://www.rollanet.org/~joeh/projects/index_files/filelist.xml">
+<link rel="Edit-Time-Data" href="http://www.rollanet.org/~joeh/projects/index_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title align="CENTER">The IC901A Remote Control Head Page</title>
+<meta name="description" content="Circuit theory, software theory of operation, assembly, and operation of the IC901 Remote COntrol Head add-on to the HM-133 DTMF Adapter designed by Joe Haas, KE0FF.">
+<meta name="keywords" content="Replacement Microphone,HM-133,HM-151,IC-901A,ICOM,,Dual Tone Multi-Frequency,DTMF,FM,Repeater Control,
+C8051F530,RJ-45 Microphone,HM-133 Modifications,Remote Control Head">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>J</o:Author>
+  <o:LastAuthor>J</o:LastAuthor>
+  <o:Revision>7</o:Revision>
+  <o:TotalTime>5</o:TotalTime>
+  <o:Created>2012-12-20T18:22:00Z</o:Created>
+  <o:LastSaved>2012-12-20T22:32:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>475</o:Words>
+  <o:Characters>2714</o:Characters>
+  <o:Company> DACINT</o:Company>
+  <o:Lines>22</o:Lines>
+  <o:Paragraphs>6</o:Paragraphs>
+  <o:CharactersWithSpaces>3183</o:CharactersWithSpaces>
+  <o:Version>11.9999</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:1021979350;
+	mso-list-template-ids:450297508;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:14.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--></head><body bgcolor="white" background="../index_files/ffback.JPG" lang="EN-US" link="blue" vlink="blue" style="tab-interval:.5in"><header></header><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+
+
+
+
+<div class="Section1">
+
+<div class="MsoNormal" align="center" style="text-align:center">
+
+<hr size="2" width="100%" align="center">
+
+</div>
+
+<div class="MsoNormal" align="center" >
+
+<h2 align="center" style="text-align:center">The IC901A Remote Control Head Project Page</h2>
+
+<p class="MsoNormal">Updated 10/13/2020</p>
+<a href="./index.html">Back to the HM-133 Adapter Page</a>
+
+<hr size="2" width="100%" align="center">
+
+</div>
+
+<!--<p class="MsoNormal" align="center" style="text-align:center"><img width="483" height="839" id="_x0000_i1026" src="./hm133_banner.jpg"> -->
+<center>
+<table border="0" width="1300">
+<tr>
+<td>
+<img width="885" height="588" id="_x0000_i1026" src="./rch901_banner.jpg">
+</td>
+<td>
+<img width="40" height="20" id="_x0000_i1026" src="./space40.png">
+</td>
+<td>
+<center>
+<font size = "6">
+This page describes the IC901A Remote Control Head Adapter Project</p>
+</center>
+<font size = "4">
+
+This project is an add-on to the HM-133 DTMF Adapter.  This add-on allows the extended command buttons on an
+HM-151 microphone to wirelessly "connect to" selected buttons on the IC-901A control head via a bluetooth RF link.</p>
+
+The HM133 Adapter uses a small microcontroller to interpret the serial data from an HM-133/151 microphone to send
+DTMF tones and the limited button signalization (such as UP/DOWN) present on older DTMF microphones.  By using the
+UART of the MCU to connect to a bluetooth module, the HM-133 can then be used to send mic-button presses via bluetooth
+to the control head of an IC-901A.</p>
+
+The modification makes use of the traditional key-matrix scanning techniques utilized by the IC-901 to allow keypress
+data to be sent with a minimum of logic signals.  These techniques are likely used with other radios (regardless if they
+have a detachable control head) allowing this project to act as a roadmap for those who might want to try a similar
+approach with another radio.</p>
+</td>
+</tr>
+</table>
+</center>
+
+
+<div class="MsoNormal" align="center" style="text-align:center">
+
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>A Brief Synopsis... <a name = "synopsys"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+<td>
+<font size = "4">
+I've been working on the remote control aspects of the IC-901 for many years now.  I've actually built a couple of control
+projects to essentially replace the control head of that radio.  However, I'm not game to re-invent that wheel yet... there
+just aren't enough hours in the day, unfortunately.  Still, I use the radio mobile, and would like to get the control head
+"up" where I can see it without having to completely take my eyes off the road.  Doing this is pretty easy these days as
+there are a lot of "suction-cup" cell phone holders out there.  Problem is, once it is up on the windshield and easy to see,
+it is a stretch (literally) to reach the buttons.  What to do?
+</p>
+When I created my first HM-133 DTMF adapter, I ended up with an unused UART.  Well, it WAS used, for debug, but after that,
+nuttn'.  Still, I provided solder pads on the PCB, "just in case".  Subsequent revisions of the design scarfed up those pins,
+so the UART availability is compromised, but for the original PCB, it is still available.  That happened to be the one I've
+been using, so that meant my UART was still in play.
+</p>
+I've started driving back and forth to work again, a couple of days a week at least, so I started thinking more about this
+whole control thing again.  What if I used some bluetooth modules to send "button press" commands to the control head?  I could
+then use the myriad buttons on my HM-151 that have no purpose when connected to the IC-901A.  A couple of weeks ago, I fell
+down the rabbit hole for bluetooth modules, and ended up buying a couple.  Something like $10 for a pair.  Lunch is generally
+more expensive than that.
+</p>
+Thus began the journey in earnest.  It was a relatively quick journey (a woeful rareity in my life) with a conclusion that
+came very close to my expectations (another woeful rarity).
+</p>
+</td>
+</tr>
+</table>
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>Hardware Design... <a name = "hw"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+<td>
+<font size = "4">
+
+The first step was to get the modules turned on and connected.  To do this, they needed to be soldered to a board.  To do THIS...
+I needed a board.  While there are a number of really cheap PCB options available these days (<a href = "http://www.PCBgogo.com">PCBgogo.com</a> is my current go-to),
+I decided on the REALLY fast turn option: An Exacto-knife and some blank FR-4 material.  The bulk of the material I have features
+0.5oz Cu which makes the process go pretty easily (thicker copper is harder to score and peel).  The photos below illustrate the result.
+I have done projects many times with this method with good success.  Of course, a microscope and a knife with a proper edge contribute
+greatly to the success.  The main disadvantages to this method of construction is that it is time consuming to do and there are
+no "spares".
+</p>
+</br>
+</td>
+</tr>
+</table>
+
+<center>
+<img width="528" height="264" id="_x0000_i1126" src="./bt_host.jpg"></p>
+BT Host</p>
+
+<img width="900" height="283" id="_x0000_i1127" src="./bt_remote.jpg"></p>
+BT Remote</p>
+</center>
+
+<table border="0" width="900">
+<tr>
+<td>
+<font size = "4">
+
+The host board was sized to fit precicely between the RJ-45 connector housings on the HM-133 adapter, while the remote board was less
+precicely sized to fit onto the back of the IC-901 control head.  In fact, it started out rather larger and was trimmed to the size
+shown above. From this point, I could learn how to talk to the modules and see if they could bend to my will.  There was a short learning curve
+to figure out the syntax, and how to identify the modules to each other.  I also spent a bit of time grabbing and tinkering with
+a couple of iphone apps from Microchip.  Soon, I had the modules connected and was able to control an LED on the remote board.  Sa-WHEAT!
+</p>
+The next step was the control head interface.  The module I selected has only 5 GPIOs (General Purpose I/O) available for user control.
+The Control head has 19 buttons, plus the encoder dial (I did not interface the dial).  Since only one button need be pressed at a time,
+we can reduce that to binary, so we'd need 5 "bits" to cover 19 possibilities.  However, the proper way to implement such a scheme is to
+have a button "address" and a "press" signal.  This means we need 6 bits to cover the 19 buttons.  This puts us in a bit of a pickle with
+only 5 bits to work with.  Fortunately, the remote module also has a PWM feature, which allows us to "hack" a 6th bit by using the PWM
+output with an RC filter to remove the PWM carrier.  By setting the PWM to 99.5% or 0.5%, we get another logic output.
+</p>
+Originally, I was thinking I'd need to use an N-FET or an analog switch to close the contacts on each switch.  This would require a lot
+of transistors along with a lot of wires running all over the control head PCB.  However, I decided to use the matrix nature of the button
+layout to my advantage.  By employing 74HCT138 decoder ICs, I was able to connect the "address" signals (a[3:0]) and a "pulse" output from
+the the BT module to the decoders to effect the button selection.  Additionally, the "row" signal from the 901 control IC was connected to
+one of the HCT138 enable inputs.  There were two rows, thus the two HCT138 devices.  The outputs of the two HCT138s were combined with diodes
+to complete the circuit.  This allowed 16 buttons to be accessed using only 10 wires to the 901 control IC.
+</p>
+The remaining 3 buttons were not in the button matrix, but were just open/GND inputs to the controller IC.  This meant that they could be
+handled a bit differently.  For these, I used an HCT238 (same logic as the HCT138, but the outputs are active high) connected to 3 N-FETs
+which in turn drive the three remaining switch inputs.  a[1:0] selected the buttons and a separate pulse signal was used to "press".  The
+space was tight, but I managed to squeeze the circuit inside the control head as the photo below illustrates.
+</p>
+<center>
+<img width="900" height="305" id="_x0000_i1128" src="./ch901.jpg"></p>
+IC-901A Control Head modifications (BT remote cable is not yet attached)</p>
+</center>
+</p>
+The addition of a short cable/connector and a back cover machined out of a flat piece of 1/4" thick PVC gives the final configuration of the control
+head part of the puzzle.
+</p>
+<center>
+<img width="884" height="587" id="_x0000_i1129" src="./CH_901_exploded.jpg"></p>
+IC-901A Control Head final configuration (unfolded)</p>
+</br>
+</center>
+
+</p>
+</td>
+</tr>
+</table>
+<center>
+<a href="ch901_schem.pdf"><img width="822" height="615" src="./ch901_schem.png"></a>
+</p>
+<h3>Control Head BT interface schematic</h3>
+<h4>(click on image to see a pdf version)</h4>
+</br>
+<!--<a href="bt_host_schem.pdf"><img width="822" height="615" src="./bt_host_schem.png"></a>
+</p>
+<h3>Host BT interface schematic</h3>
+<h4>(click on image to see a pdf version)</h4> -->
+
+</center>
+<hr size="2" width="100%" align="center">
+
+</div>
+<center>
+<h2>Software Design... <a name = "sw"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+<td>
+<font size = "4">
+
+The software took a pit of prodding to get moving.  First, the C8051F530 has only 256 bytes of RAM.  Not a lot, but sufficient for simple tasks.  The addition of the serial
+interactions with the bluetooth host caused some overflow due to the linker not knowing where to put RAM items.  I spent most of my time here trying to learn things about linkers
+that most SW people learn in their intro courses (and then never talk about, because I can't seem to find anyone who can speak cogently about segments and linker allocation
+techniques).  I was able to mostly get a handle on the process, and found that the project would push the memory requirements to the limit of the processor's available RAM.
+</p>
+In addition, I created a conflict with Timer1 that had to be resolved.  I was using Timer1 to process the DDS tone ISR, but Timer1 also drives the baud clock for the UART.  So,
+I could either run the DDS at 115,200 Hz (or a slower rate), and recalculate all of the DDS frequency dependent items, OR move the DDS to another timer.  The latter seemed the
+easier task, so I moved the DDS to Timer2, and adjusted the application timer code by wrapping it in a prescale loop to return the timers to (nearly) their original 1ms rate.
+</p>
+Once these tasks had been wrestled to the ground, all that remained was to create a state machine to handle the bluetooth connection and command processing tasks and then
+implement calls to that process to signal when a button press action was called for.  I also had to re-arrange some existing functionality to gain access to some of the
+microphone buttons. This led me to the following "button map" for the HM-151:
+</p>
+<center>
+<img width="187" height="320" src="./hm151.jpg">
+</p>
+<h3>HM-151 button map</h3>
+</br>
+</center>
+</p>
+
+<center>
+<table border="1" width="480px">
+<tr>
+<td width = 160><center>L: Scan up</center></td>
+<td width = 160><center>T: CALL</center></td>
+<td width = 160><center>X: Main/Sub swap</center></td>
+</tr>
+
+<tr>
+<td><center>/: "UP" button</center></td>
+<td><center>V: V/M</center></td>
+<td><center>M: H/L power</center></td>
+</tr>
+
+<tr>
+<td><center>\: "DN" button</center></td>
+<td><center>F: SET config</center></td>
+<td><center>G: SUB band</center></td>
+</tr>
+</table>
+
+<table border="1" width="480px">
+<tr>
+<td width = 120><center>1</center></td>
+<td width = 120><center>2</center></td>
+<td width = 120><center>3</center></td>
+<td width = 120><center>A (MODE)</center></td>
+</tr>
+
+<tr>
+<td><center>4</center></td>
+<td><center>5</center></td>
+<td><center>6</center></td>
+<td><center>B (TSQ)</center></td>
+</tr>
+
+<tr>
+<td><center>7</center></td>
+<td><center>8</center></td>
+<td><center>9</center></td>
+<td><center>C (Band switch)</center></td>
+</tr>
+
+<tr>
+<td><center>*</center></td>
+<td><center>0</center></td>
+<td><center>#</center></td>
+<td><center>D (SMUTE)</center></td>
+</tr>
+
+</table>
+
+</center>
+</br>
+
+</br>
+To maximize functionality, the numeric buttons and "*" and "#" were previously "multiplexed" by PTT.  In other words, these buttons functioned
+differently depending on the state of the PTT switch.  This M.O. was carried further to allow more buttons to be available to control the IC-901A.
+I also consolodated the LED brightness control, which now toggles with the "*" button.  "#" toggles the CHECK button on the 901 (any button will
+cancel the CHECK activation).  "A" thru "D" are now used to control 901 functions (as shown above).  If the PTT is active, the lower 16 buttons
+generate the corresponding DTMF tone (MW still generates the 1KHz test tone if PTT is active).
+</p>
+The button loop takes a button address, sends it to the remote BT module via serial commands, and then sends serial commands to toggle the "pulse"
+signal to facilitate the remote "press". This scheme takes an extra serial command, but accomplishes the button selection with no possibility for a logic "race condition"
+that might result in a phantom button press.
+</p>
+There can be no project without feature creep, at least not in my house.  For this project, the creep came in the form of the "Mute on RX" feature (or
+"Unmute on TX", if you are a glass half full kind of person).  This feature meets a need that I've been considering for some time.  The
+problem happens when I'm trying to operate full duplex on a local repeater system.  The nature of this full duplex link is such that I will
+most likely hear a link frequency (on another band) that is very strong when I am transmitting.  However, when others are transmitting, the link
+I hear will either be weak, or have delay in the audio.  Sometimes, more often that one might think, I even hear activity from a distant, and
+unrelated, system.
+</p>
+The talk-back capability allows me to gauge my signal quality into the system and is otherwise of no use when I am in RX.  It adds nothing and can be quite
+distracting.  Since the microcontroller is directly in the path of the microphone PTT, it can use that information to do something useful.  In
+this case, at each PTT transition, the processor pulses the SMUTE (sub-mute) button.  This action toggles the sub-mute feature.  All I have to
+do is manually establish the SMUTE state while receiving.  After that, the sub-band will be un-muted when I transmit, and muted when I receive.
+</p>
+For the moment, this feature is enabled by a micro-DIP swich on the HM-133 adapter.  The switch is difficult to operate while driving, but is my
+best solution at the moment.  Reversing the sense of SMUTE to support "Mute on TX" (just a button press by the operator) has some appeal as well for
+those times when I am not duplex and don't want to get blasted by the sub-band while I'm transmitting.  If I decide I want to enable/disable the
+feature on the fly, I'll have to come up with some manner of unique key sequence (more importantly, some way to signal that the feature has been
+turned on or off).  For now, the DIP switch is the best I can manage.
+</p>
+Other variations are possible as well.  One other possibility is to program the talk-back frequency in a call channel (as it currently is) and then toggle
+the sub-band CALL button at each PTT transition.  This requires two extra button presses, however, so I have not raced to this solution just yet.
+Still, the serial messages are pretty fast, and this would allow me to monitor another repeater while I am not transmitting.  Allowing one to
+take full advantage of a "dual-band" radio.
+</p>
+<hr size="2" width="100%" align="center">
+</div>
+
+<center>
+<h2>Terminis... <a name = "hm133"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+
+<td>
+<font size = "4">
+The HM-151 was used in place of the HM-133 because the audio level of my HM-151 more closely matches that of my IC-901.  Efforts at finding a mic
+element for my HM-133s that is consistent with the HM-151/IC-901 have stalled, so the HM-151 is the MIC of choice around here at the moment.
+Some of the subtleties of the HM-133 differences might make it a better choice, primary being that the HM-133 has a "Function" button which would
+add a button press to some commands, but would by default offer up a number of additional functions that could be coded (volume and squelch would
+be nice and all that is needed is a bit of software and some MIC buttons...).</p>
+
+There was no lack of hair-pulling on this project, but I was able to surmount the impediments and push towards a successful conclusion.  A quick
+project to gain an interesting augment to my trusty FM radio stack. Now, on to the next project...
+</p></br>
+
+<hr size="2" width="100%" align="center">
+</div>
+<center>
+<h2>Photos<a name = "hm133"></a></h2>
+<table border="0" width="900">
+<tr>
+</center>
+
+<center>
+<img width="882" height="287" src="./hm133bt.jpg">
+</p>
+<h3>Close-up of the modified HM-133 Adapter</h3>
+</br>
+<img width="895" height="752" src="./whole_smash.jpg"></a>
+</p>
+<h3>The modified control head and HM-133 Adapter</h3>
+
+</center>
+</td>
+</tr>
+</table>
+
+<!--
+<table border="0" width="500">
+<tr>
+
+<td>
+<font size = "4">
+<a href="rc901source.html">IC-901A Remote Control Head Adapter Source Code Page</a> </p>
+<a href="hm133hex.zip">IC-901A Remote Control Head Adapter Object Code</a> </p>
+<a href="http://www.rollanet.org/~joeh/projects/Orion/silabspgm.pdf">SiLabs Programming guide</a> </p>
+</td>
+</tr>
+</table> -->
+
+<hr size="2" width="100%" align="center">
+</div>
+
+
+</center>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto"><o:p>&nbsp;</o:p></p>
+
+</div>
+
+
+
+
+</body></html>
