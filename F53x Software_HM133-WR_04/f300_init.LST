@@ -1,0 +1,167 @@
+C51 COMPILER V9.55   F300_INIT                                                             06/27/2022 22:15:58 PAGE 1   
+
+
+C51 COMPILER V9.55, COMPILATION OF MODULE F300_INIT
+OBJECT MODULE PLACED IN f300_init.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE f300_init.c OPTIMIZE(2,SIZE) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /////////////////////////////////////
+   2          //  Generated Initialization File  //
+   3          /////////////////////////////////////
+   4          
+   5          #include "compiler_defs.h"
+   6          #include "c8051F520.h"
+   7          
+   8          // Peripheral specific initialization functions,
+   9          // Called from the Init_Device() function
+  10          void Reset_Sources_Init()
+  11          {
+  12   1          int i = 0;
+  13   1          VDDMON    = 0xA0;
+  14   1          for (i = 0; i < 20; i++);  // Wait 5us for initialization
+  15   1          RSTSRC    = 0x00;
+  16   1      }
+  17          
+  18          void PCA_Init()
+  19          {
+  20   1          PCA0CN    = 0x40;
+  21   1          PCA0MD    &= ~0x40;
+  22   1          PCA0MD    = 0x02;
+  23   1          PCA0CPM0  = 0x21;
+  24   1          PCA0CPM1  = 0x42;
+  25   1          PCA0CPM2  = 0x42;
+  26   1          PCA0CPH1  = 0x80;
+  27   1          PCA0CPH2  = 0x80;
+  28   1      }
+  29          
+  30          void Timer_Init()
+  31          {
+  32   1          TCON      = 0x40;
+  33   1          TMOD      = 0x22;
+  34   1          CKCON     = 0x1C;
+  35   1          TL0       = 0x80;
+  36   1          TH0       = 0x80;
+  37   1          TH1       = 0x96;
+  38   1          TMR2CN    = 0x04;
+  39   1          TMR2RLL   = 0x00;
+  40   1          TMR2RLH   = 0xFC;
+  41   1          TMR2L     = 0x00;
+  42   1          TMR2H     = 0xFC;
+  43   1      
+  44   1      /*    TCON      = 0x40;
+  45   1          TMOD      = 0x22;
+  46   1          CKCON     = 0x05;
+  47   1          TL0       = 0x80;
+  48   1          TH0       = 0x80;
+  49   1          TMR2CN    = 0x04;
+  50   1          TMR2RLL   = 0x06;
+  51   1          TMR2RLH   = 0xF8;
+  52   1          TMR2L     = 0x06;
+  53   1          TMR2H     = 0xF8;*/
+  54   1      }
+  55          
+C51 COMPILER V9.55   F300_INIT                                                             06/27/2022 22:15:58 PAGE 2   
+
+  56          void UART_Init()
+  57          {
+  58   1          SCON0     = 0x10;
+  59   1      }
+  60          
+  61          void SPI_Init()
+  62          {
+  63   1          SPI0CFG   = 0x40;
+  64   1          SPI0CN    = 0x00;
+  65   1          SPI0CKR   = 0x79;
+  66   1      }
+  67          
+  68          void Comparator_Init()
+  69          {
+  70   1          int i = 0;
+  71   1          CPT0CN    = 0x85;
+  72   1          for (i = 0; i < 35; i++);  // Wait 10us for initialization
+  73   1          CPT0CN    &= ~0x30;
+  74   1          CPT0MX    = 0x75;
+  75   1          CPT0MD    = 0x81;
+  76   1      }
+  77          
+  78          void Voltage_Reference_Init()
+  79          {
+  80   1          REF0CN    = 0x10;
+  81   1      }
+  82          
+  83          void Port_IO_Init()
+  84          {
+  85   1          // P0.0  -  Skipped,     Open-Drain, Analog
+  86   1          // P0.1  -  CP0A (Cmp0), Push-Pull,  Digital
+  87   1          // P0.2  -  CEX0  (PCA), Open-Drain, Digital
+  88   1          // P0.3  -  CEX1  (PCA), Push-Pull,  Digital
+  89   1          // P0.4  -  TX   (UART), Push-Pull,  Digital
+  90   1          // P0.5  -  RX   (UART), Open-Drain, Digital
+  91   1          // P0.6  -  Skipped,     Open-Drain, Digital
+  92   1          // P0.7  -  CEX2  (PCA), Push-Pull,  Digital
+  93   1      
+  94   1          // P1.0  -  Unassigned,  Push-Pull,  Digital
+  95   1          // P1.1  -  Unassigned,  Open-Drain, Digital
+  96   1          // P1.2  -  Skipped,     Open-Drain, Analog
+  97   1          // P1.3  -  Unassigned,  Push-Pull,  Digital
+  98   1          // P1.4  -  Unassigned,  Open-Drain, Digital
+  99   1          // P1.5  -  Unassigned,  Push-Pull,  Digital
+ 100   1          // P1.6  -  Unassigned,  Push-Pull,  Digital
+ 101   1          // P1.7  -  Skipped,     Open-Drain, Analog
+ 102   1      
+ 103   1          P0MDIN    = 0xFE;
+ 104   1          P1MDIN    = 0x7B;
+ 105   1          P0MDOUT   = 0x9A;
+ 106   1          P1MDOUT   = 0x69;
+ 107   1          P0SKIP    = 0x41;
+ 108   1          P1SKIP    = 0x84;
+ 109   1          P0SKIP    |= 0x30;
+ 110   1          XBR0      = 0x21;
+ 111   1          XBR1      = 0x43;
+ 112   1      }
+ 113          
+ 114          void Oscillator_Init()
+ 115          {
+ 116   1          OSCICN    = 0xC7;
+ 117   1      }
+C51 COMPILER V9.55   F300_INIT                                                             06/27/2022 22:15:58 PAGE 3   
+
+ 118          
+ 119          void Interrupts_Init()
+ 120          {
+ 121   1          EIE1      = 0x04;
+ 122   1          EIP1      = 0x04;
+ 123   1          IE        = 0x30;           //0x2A;
+ 124   1      }
+ 125          
+ 126          // Initialization function for device,
+ 127          // Call Init_Device() from your main program
+ 128          void Init_Device(void)
+ 129          {
+ 130   1          Reset_Sources_Init();
+ 131   1          PCA_Init();
+ 132   1          Timer_Init();
+ 133   1          UART_Init();
+ 134   1          SPI_Init();
+ 135   1          Comparator_Init();
+ 136   1          Voltage_Reference_Init();
+ 137   1          Port_IO_Init();
+ 138   1          Oscillator_Init();
+ 139   1          Interrupts_Init();
+ 140   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    240    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

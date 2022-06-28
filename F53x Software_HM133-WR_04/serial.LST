@@ -1,0 +1,382 @@
+C51 COMPILER V9.55   SERIAL                                                                06/27/2022 22:15:58 PAGE 1   
+
+
+C51 COMPILER V9.55, COMPILATION OF MODULE SERIAL
+OBJECT MODULE PLACED IN serial.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE serial.c OPTIMIZE(2,SIZE) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*************************************************************************
+   2           *********** COPYRIGHT (c) 2020 by Joseph Haas (DBA FF Systems)  *********
+   3           *
+   4           *  File name: serial.c
+   5           *
+   6           *  Module:    Control
+   7           *
+   8           *  Summary:   This is the serial I/O module for the F360 MCU
+   9           *
+  10           *******************************************************************/
+  11          
+  12          
+  13          /********************************************************************
+  14           *  File scope declarations revision history:
+  15           *    03-03-21 jmh:  Removed "percnt" from ISR as the result of the disambigution of the "%" response quot
+             -ing character.
+  16           *
+  17           *    08-23-20 jmh:  modified to support bluetooth interface
+  18           *    05-12-13 jmh:  creation date
+  19           *
+  20           *******************************************************************/
+  21          
+  22          #include "c8051F520.h"
+  23          #include "typedef.h"
+  24          #include "init.h"
+  25          //#include "stdio.h"
+  26          #include "serial.h"
+  27          
+  28          //------------------------------------------------------------------------------
+  29          // local defines
+  30          //------------------------------------------------------------------------------
+  31          
+  32          //-----------------------------------------------------------------------------
+  33          // Local Variable Declarations
+  34          //-----------------------------------------------------------------------------
+  35          
+  36          #define RXD_ERR 0x01
+  37          //#define RXD_CR 0x02                                   // CR rcvd flag
+  38          #define RXD_BS 0x04                                     // BS rcvd flag
+  39          #define RXD_ESC 0x40                            // ESC rcvd flag
+  40          #define RXD_CHAR 0x80                           // CHAR rcvd flag (not used)
+  41          #define RXD_BUFF_END 4
+  42          /*idata S8      rxd_buff[RXD_BUFF_END];         // rx data buffer
+  43                    U8    rxd_hptr;                                       // rx buf head ptr = next available buffer input
+  44                    U8    rxd_tptr;                                       // rx buf tail ptr = next available buffer output
+  45                    U8    rxd_stat;                                       // rx buff status
+  46                    U8    rxd_crcnt;                                      // CR counter*/
+  47                    bit   qTI0B;                                          // UART TI0 reflection (set by interrupt)
+  48          //        bit   siplfl;                                         // UART ISR ipl init flag
+  49          //------------------------------------------------------------------------------
+  50          // local fn declarations
+  51          //------------------------------------------------------------------------------
+  52          char eolchr(char c);
+  53          char wait_cmd(void);
+  54          
+C51 COMPILER V9.55   SERIAL                                                                06/27/2022 22:15:58 PAGE 2   
+
+  55          //-----------------------------------------------------------------------------
+  56          // init_serial() initializes serial port vars
+  57          //-----------------------------------------------------------------------------
+  58          //
+  59          void init_serial(void){
+  60   1              
+  61   1              init_buff();
+  62   1      //      getch00();                                      // init the fns
+  63   1      //      cleanline();
+  64   1      //      gotch00();
+  65   1      //      anych00();
+  66   1      //      gotcr();
+  67   1              qTI0B = 1;                                      // UART TI0 reflection (set by interrupt)
+  68   1      }
+  69          //
+  70          //-----------------------------------------------------------------------------
+  71          // init_buff() initializes serial port buffer
+  72          //-----------------------------------------------------------------------------
+  73          //
+  74          void init_buff(void){
+  75   1      
+  76   1      //      siplfl = 1;                                     // set IPL init for ISR
+  77   1      //      rxd_hptr = 0;                           // rx buf head ptr
+  78   1      //      rxd_tptr = 0;                           // rx buf tail ptr
+  79   1      //      rxd_stat = 0;                           // rx buff status
+  80   1      //      rxd_crcnt = 0;                          // init cr counter
+  81   1      }
+  82          //
+  83          //-----------------------------------------------------------------------------
+  84          // putch, UART0
+  85          //-----------------------------------------------------------------------------
+  86          //
+  87          // SFR Paged version of putch, no CRLF translation
+  88          //
+  89          char putch (char c)  {
+  90   1      
+  91   1              // output character
+  92   1              while(!qTI0B){                          // wait for tx buffer to clear
+  93   2                      continue;
+  94   2              }
+  95   1              qTI0B = 0;
+  96   1              SBUF0 = c;
+  97   1              return (c);
+  98   1      }
+  99          
+ 100          //
+ 101          //-----------------------------------------------------------------------------
+ 102          // getch00 checks for input @ RX0.  If no chr, return '\0'.
+ 103          //-----------------------------------------------------------------------------
+ 104          //
+ 105          // SFR Paged, waits for a chr and returns
+ 106          // Processor spends most of its idle time waiting in this fn
+ 107          /*
+ 108          char getch00(void)
+ 109          {
+ 110                  char c = '\0';          // default to null return
+ 111          
+ 112                  if(rxd_tptr != rxd_hptr){
+ 113                          c = rxd_buff[rxd_tptr];                         // pull chr and update pointer
+ 114                          rxd_buff[rxd_tptr++] = '~';                     // backfill for debug
+ 115                          if(rxd_tptr == RXD_BUFF_END){
+ 116                                  rxd_tptr = 0;
+C51 COMPILER V9.55   SERIAL                                                                06/27/2022 22:15:58 PAGE 3   
+
+ 117                          }
+ 118                  }
+ 119                  return c;
+ 120          }
+ 121          */
+ 122          //
+ 123          //-----------------------------------------------------------------------------
+ 124          // cleanline() cleans buffer up to and including 1st CR.  
+ 125          //      Pull CHRS from buffer and discard until first CR is encountered.  Then, exit.
+ 126          //-----------------------------------------------------------------------------
+ 127          //
+ 128          /*void cleanline(void)
+ 129          {
+ 130          data    char c; // temp char
+ 131          
+ 132                  if(gotch00()){                                                  // skip if buffer empty
+ 133                          do{
+ 134                                  c = getch00();                                  // pull chr and update pointer
+ 135                          }while(gotch00());                                      // repeat until CR or buffer empty
+ 136                  }
+ 137                  rxd_crcnt = 0;
+ 138                  return;
+ 139          }
+ 140          */
+ 141          //
+ 142          //-----------------------------------------------------------------------------
+ 143          // gotch00 checks for input @ RX0.  If no chr, return '\0'.
+ 144          //-----------------------------------------------------------------------------
+ 145          //
+ 146          // returns 0 if no chr in buffer or if current chr is '\r'
+ 147          /*
+ 148          char gotch00(void)
+ 149          {
+ 150                  char c = 0;
+ 151          
+ 152                  if((rxd_tptr != rxd_hptr) && (rxd_buff[rxd_tptr] != '\r')){
+ 153                          c = 1;                                          // set buffer has data
+ 154                  }
+ 155                  if(rxd_stat & RXD_BS){                          // process backspace
+ 156                          rxd_stat &= ~RXD_BS;                    // clear flag
+ 157                          putss("\b \b");                                 // echo clearing BS to terminal
+ 158                  }
+ 159                  return c;
+ 160          }
+ 161          */
+ 162          //
+ 163          //-----------------------------------------------------------------------------
+ 164          // anych00 checks for any input @ RX0.  If no chr, return '\0'.
+ 165          //-----------------------------------------------------------------------------
+ 166          //
+ 167          // returns 0 if no chr in buffer or if current chr is '\r'
+ 168          /*
+ 169          char anych00(void)
+ 170          {
+ 171                  char c = 0;
+ 172          
+ 173                  if((rxd_tptr != rxd_hptr) && (rxd_buff[rxd_tptr] != '\0')){
+ 174                          c = 1;                                          // set buffer has data
+ 175                  }
+ 176                  return c;
+ 177          }
+ 178          */
+C51 COMPILER V9.55   SERIAL                                                                06/27/2022 22:15:58 PAGE 4   
+
+ 179          //
+ 180          //-----------------------------------------------------------------------------
+ 181          // gotcr checks for '\r' @ RX0.  If no chr, return '\0'.
+ 182          //-----------------------------------------------------------------------------
+ 183          //
+ 184          // returns 0 if no cr rcvd
+ 185          /*
+ 186          char gotcr(void)
+ 187          {
+ 188                  char c = 0;
+ 189          
+ 190                  if(rxd_crcnt){
+ 191                          c = 1;                                                  // set buffer has data
+ 192                  }
+ 193                  return c;
+ 194          }
+ 195          */
+ 196          //-----------------------------------------------------------------------------
+ 197          // cpy_str() copies src to dest
+ 198          //-----------------------------------------------------------------------------
+ 199          /*
+ 200          void cpy_str (char* src, char* dest)
+ 201          {
+ 202                  char c;
+ 203          
+ 204                  do{
+ 205                          c = *src;
+ 206                          *dest = c;
+ 207                          src += 1;
+ 208                          dest += 1;
+ 209                  }while(c);
+ 210                  return;
+ 211          }
+ 212          */
+ 213          //-----------------------------------------------------------------------------
+ 214          // char hiasc() returns hi nybble as ASCII
+ 215          //-----------------------------------------------------------------------------
+ 216          
+ 217          char hiasc (U8 num)
+ 218          {
+ 219   1              char c;
+ 220   1      
+ 221   1              c = ((num>>4)& 0x0f) + '0';
+ 222   1              if(c > '9'){
+ 223   2                      c += 'A' - '9' - 1;
+ 224   2              }
+ 225   1              return c;
+ 226   1      }
+ 227          
+ 228          //-----------------------------------------------------------------------------
+ 229          // char lowasc() returns low nybble as ASCII
+ 230          //-----------------------------------------------------------------------------
+ 231          
+ 232          char lowasc (U8 num)
+ 233          {
+ 234   1              char c;
+ 235   1      
+ 236   1              c = (num & 0x0f) + '0';
+ 237   1              if(c > '9'){
+ 238   2                      c += 'A' - '9' - 1;
+ 239   2              }
+ 240   1              return c;
+C51 COMPILER V9.55   SERIAL                                                                06/27/2022 22:15:58 PAGE 5   
+
+ 241   1      }
+ 242          
+ 243          //-----------------------------------------------------------------------------
+ 244          // putss() does puts w/o newline
+ 245          //-----------------------------------------------------------------------------
+ 246          
+ 247          void putss (char* string)
+ 248          {
+ 249   1              while(*string){
+ 250   2                      putch(*string++);
+ 251   2              }
+ 252   1              return;
+ 253   1      }
+ 254          
+ 255          //-----------------------------------------------------------------------------
+ 256          // getss() copies rxd capture to string.  Returns ptr to next empty chr of string
+ 257          //-----------------------------------------------------------------------------
+ 258          /*
+ 259          char* getss (char* string, U8 maxlen)
+ 260          {
+ 261                  char* pstr = string;
+ 262                  char  c;
+ 263                  U8        ctr = 0;
+ 264                  bit     EA_save;
+ 265          
+ 266                  do{
+ 267                          c = getch00();
+ 268                          if(ctr < maxlen){
+ 269                                  *pstr = c;                                              // only capture the first "maxlen" chrs
+ 270                                  pstr += 1;
+ 271                                  ctr += 1;
+ 272                          }
+ 273                  }while(c != '\0');
+ 274                  if(rxd_crcnt){
+ 275                          EA_save = EA;                                   // prohibit intrpts
+ 276                          EA = 0;
+ 277                          rxd_crcnt -= 1;                                 // clear flag
+ 278                          EA = EA_save;                                   // re-set intrpt enable
+ 279                  }
+ 280                  return *pstr;
+ 281          }*/
+ 282          
+ 283          //
+ 284          //-----------------------------------------------------------------------------
+ 285          // rxd_intr
+ 286          //-----------------------------------------------------------------------------
+ 287          //
+ 288          // UART intr.  Captures RX data and places into circular buffer
+ 289          //      For TX, if mode = buffered, the intr will process the TX buffer until empty.
+ 290          //      To send data, fill the tx buffer, then kick-start the transmit process as follows:
+ 291          //
+ 292          //              c = txd_buff[txd_tptr++];               // get 1st chr of buffered data
+ 293          //              if(txd_tptr >= TXD_BUFF_END){
+ 294          //                      txd_tptr = 0;                           // roll-over headptr
+ 295          //              }
+ 296          //              SBUF0 = c;                                              // prime the pump (kick-start the TX output)
+ 297          //              TI0B = 0;
+ 298          //
+ 299          //      If not in buffered mode, use reflection register to pass TXD empty status back to
+ 300          //      putchar.
+ 301          //
+ 302          //
+C51 COMPILER V9.55   SERIAL                                                                06/27/2022 22:15:58 PAGE 6   
+
+ 303          //-----------------------------------------------------------------------------
+ 304          // uart1_intr
+ 305          //-----------------------------------------------------------------------------
+ 306          //
+ 307          // UART1 rx intr.  Captures RX data and places into circular buffer
+ 308          //      Uses "trap sentinels" to itentify when to start storing data to the buffer.
+ 309          //      This allows the respones from the target device to occupy much less buffer space
+ 310          //      by capturing only a small part of the responses and discarding the remaining characters.
+ 311          //      Most of the BT responses start with "%".  The "S%,%,#" command sets the terminating
+ 312          //      character to a "#".  This disambiguates "%" making it only signal the start of a response.
+ 313          //
+ 314          //      Three characters plus a terminating null are captured whenever a trap sentinel is detected
+ 315          //      (includes the trap character).
+ 316          //
+ 317          
+ 318          void rxd_intr(void) interrupt 4
+ 319          {
+ 320   1      /* buffer registers repeated here for reference ... !! DO NOT UNCOMMENT !!
+ 321   1      S8   rxd_buff[10];                                      // rx data buffer
+ 322   1      U8   rxd_hptr = 0;                                      // rx buf head ptr
+ 323   1      U8   rxd_tptr = 0;                                      // rx buf tail ptr
+ 324   1      U8   rxd_stat = 0;                                      // rx buff status*/
+ 325   1              
+ 326   1      //#define       TRAP_LEN        3                               // length of responses to capture
+ 327   1              
+ 328   1      volatile        char    c;
+ 329   1      //                      U8              i;
+ 330   1      //      static  U8              ccnt;
+ 331   1      //      static  U8              percnt;
+ 332   1      
+ 333   1      //      if(siplfl){
+ 334   1      //              ccnt = 0;                                                                       // IPL init
+ 335   1      //              percnt = 0;
+ 336   1      //              rxd_crcnt = 0;
+ 337   1      //              siplfl = 0;
+ 338   1      //      }
+ 339   1              if(TI0){
+ 340   2                      qTI0B = 1;                                                                      // set TX reflection flag
+ 341   2                      TI0 = 0;
+ 342   2              }
+ 343   1              if(RI0){
+ 344   2                      c = SBUF0;
+ 345   2                      RI0 = 0;                                                                        // clear intr flag
+ 346   2              }
+ 347   1              return;
+ 348   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    143    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

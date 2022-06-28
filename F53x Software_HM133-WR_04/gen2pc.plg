@@ -1,0 +1,304 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software\ff89ux.uvproj
+Project File Date:  12/02/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling stby.c...
+compiling i2c.c...
+compiling main.c...
+compiling norm.c...
+compiling serial.c...
+compiling bit.c...
+assembling INIT.A51...
+linking...
+Program Size: data=56.7 xdata=256 const=0 code=16362
+creating hex file from "gen2pc"...
+User command #1: "ff89ux_crc.bat"
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>copy ff89ux.hex raw.hex 
+The system cannot find the file specified.
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>crc.exe ff89ux.hex crc.hex 32768 
+Can't open file ff89ux.hex
+USAGE: crc input_hex_file output_hex_file ROM_size
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>del ff89ux.hex 
+Could Not Find C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software\ff89ux.hex
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>ren crc.hex ff89ux.hex 
+"gen2pc" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling stby.c...
+compiling i2c.c...
+compiling main.c...
+compiling norm.c...
+compiling serial.c...
+compiling bit.c...
+assembling INIT.A51...
+linking...
+Program Size: data=56.7 xdata=256 const=0 code=16362
+creating hex file from "ff89ux"...
+User command #1: "ff89ux_crc.bat"
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>copy ff89ux.hex raw.hex 
+        1 file(s) copied.
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>crc.exe ff89ux.hex crc.hex 32768 
+................
+Lines Processed: 1024
+Embedded CRC: 97B2  Test CRC (should be zero): 0000
+Conversion Complete
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>del ff89ux.hex 
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>ren crc.hex ff89ux.hex 
+"ff89ux" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling stby.c...
+compiling i2c.c...
+compiling main.c...
+compiling norm.c...
+compiling serial.c...
+compiling bit.c...
+assembling INIT.A51...
+linking...
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P4
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3MDOUT
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP1
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP2
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0CF
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0TC
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3SKIP
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICL
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  CLKSEL
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICN
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCLCN
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCXCN
+    MODULE:  main.obj (MAIN)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P4
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3MDOUT
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP1
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP2
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0CF
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0TC
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3SKIP
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICL
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  CLKSEL
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICN
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCLCN
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCXCN
+    MODULE:  norm.obj (NORM)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P4
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3MDOUT
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP1
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP2
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0CF
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0TC
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3SKIP
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICL
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  CLKSEL
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICN
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCLCN
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCXCN
+    MODULE:  serial.obj (SERIAL)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P4
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3MDOUT
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP1
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EIP2
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0CF
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  EMI0TC
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  P3SKIP
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICL
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  CLKSEL
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCICN
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCLCN
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+*** WARNING L46: SFR SYMBOL HAS DIFFERENT VALUES
+    SYMBOL:  OSCXCN
+    MODULE:  bit.obj (BIT)
+   DEFINED:  stby.obj (STBY)
+Program Size: data=56.7 xdata=256 const=0 code=16362
+creating hex file from "ff89ux"...
+User command #1: "ff89ux_crc.bat"
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>copy ff89ux.hex raw.hex 
+        1 file(s) copied.
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>crc.exe ff89ux.hex crc.hex 32768 
+................
+Lines Processed: 1024
+Embedded CRC: 451E  Test CRC (should be zero): 0000
+Conversion Complete
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>del ff89ux.hex 
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>ren crc.hex ff89ux.hex 
+"ff89ux" - 0 Error(s), 48 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling stby.c...
+STBY.C(94): error C202: 'SCON1': undefined identifier
+compiling i2c.c...
+compiling main.c...
+compiling norm.c...
+NORM.C(99): error C202: 'REG0CN': undefined identifier
+compiling serial.c...
+compiling bit.c...
+assembling INIT.A51...
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling stby.c...
+compiling i2c.c...
+compiling main.c...
+compiling norm.c...
+compiling serial.c...
+compiling bit.c...
+assembling INIT.A51...
+linking...
+Program Size: data=56.7 xdata=256 const=0 code=16357
+creating hex file from "ff89ux"...
+User command #1: "ff89ux_crc.bat"
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>copy ff89ux.hex raw.hex 
+        1 file(s) copied.
+C:\Documents and Settings\jhaas\My Documents\1ffsys\FF-800 Manuals\FF-89UX\Software>crc.exe ff89ux.hex crc.hex 32768 
+................
+Lines Processed: 1024
+Embedded CRC: 8C0F  Test CRC (should be zero): 0000
+Conversion Complete
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>del ff89ux.hex 
+C:\DOCUME~1\jhaas\MYDOCU~1\1ffsys\FF-800~1\FF-89UX\Software>ren crc.hex ff89ux.hex 
+"ff89ux" - 0 Error(s), 0 Warning(s).

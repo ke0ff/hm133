@@ -1,0 +1,13 @@
+"STARTUP.obj",
+"main.obj",
+"INIT.obj",
+"serial.obj",
+"f300_init.obj",
+"sine_c.obj",
+"wired_rmt.obj" 
+TO "HM133_WR" 
+RAMSIZE(256) 
+CODE( 0X0000-0X1FFF )
+BIT( 0x20 )
+DATA( 0x00 )
+IDATA( 0x80 )
