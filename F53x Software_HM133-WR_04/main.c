@@ -236,6 +236,8 @@
 // Definitions
 //-----------------------------------------------------------------------------
 
+#define	DBUG	0
+
 // DEPRECATED... THIS SW DOESN'T SUPPORT VERS == 2
 //#define	VERS	1				// PCB vers 2 uses 4094 port expander, else VERS = 1
 								// !! IC-901 expander code (this project) is currently only valid for VERS = 1 !!
@@ -278,7 +280,7 @@ sbit MDATA_IN	= P0^2;				// (i) limited serial data input (connected to comparat
 //-----------------------------------------------------------------------------
 #define	HM_START	0x01
 #define	HM_ERROR	0x02
-#define	HM_BUFMAX	3								// HM-133/151 buffers and working regs
+#define	HM_BUFMAX	4								// HM-133/151 buffers and working regs
 		volatile	U8		hm_hptr;						// save ptr in case we overflow
 		volatile	U8		hm_tptr;						// HM-133/151 key buffer tail ptr
 idata	volatile	U32		hm_buf[HM_BUFMAX];
@@ -345,10 +347,10 @@ idata	volatile	U32	hm_data;							// data register
 //	any of these codes.
 // !! These codes don't mean anything to the adapter, so they are included as comments
 //	for completeness. !!
-/*code char fnkey_code[] = { 'p',   'o',   'n',   'k',   'm',   'l',   'j',  '%',
+code char fnkey_code[] = { 'p',   'o',   'n',   'k',   'm',   'l',   'j',  '|',
 					  '!',   'a',   'b',   'c',   'q',   'd',   'e',   'f',
 					  'r',   'g',   'h',   'i',   's',   '+',   '`',   '$',
-					  't',   '\0' };*/
+					  't',   '\0' };
 // Normal mode keycodes for HM-151 and HM-133 (see above for HM-133 notes)
 code char key_code[] = { 'L',   'T',   'X',   '/',   'V',   'M',   '\\',  'F',
 					'G',   '1',   '2',   '3',   'A',   '4',   '5',   '6',
@@ -371,6 +373,11 @@ code U16 dtmf_col[] = { COL1_TONE, COL2_TONE, COL3_TONE, COL4_TONE,
 					    COL1_TONE, COL2_TONE, COL3_TONE, COL4_TONE,
 					  };
 // serial key codes less the func/dtmf/1stkey modifier nybble.
+code U16 fnkey_addr[] =  {0x0b42,0x1342,0x2342,0x2242,0x0a42,0x1242,0x2042,0x1042,
+				   0x0842,0x0bc2,0x13c2,0x23c2,0x43c2,0x09c2,0x11c2,0x21c2,
+				   0x41c2,0x0ac2,0x12c2,0x22c2,0x42c2,0x08c2,0x10c2,0x20c2,
+				   0x40c2,0x0000};
+
 code U16 key_addr[] =  {0x0b02,0x1302,0x2302,0x2202,0x0a02,0x1202,0x2002,0x1002,
 				   0x0802,0x0b82,0x1382,0x2382,0x4382,0x0982,0x1182,0x2182,
 				   0x4182,0x0a82,0x1282,0x2282,0x4282,0x0882,0x1082,0x2082,
@@ -440,6 +447,7 @@ U8 get_opt(void);
 U8 got_hmd(void);
 S32 get_hmd(void);
 char* get_hmcode(U32 keym);
+void put_hmcode(U32 keym);
 
 //******************************************************************************
 // main()
@@ -554,9 +562,9 @@ static	data	 U8		softptt;		// soft ptt detected
 			new_events = 0;
 			d = PTTM_N;
 			if(d != ptt_edge){										// process manual PTT input
-				if(!PTT_CALL){
-					process_WR(SMUTE);								// toggle smute button on PTT edge if P0.6 == GND
-				}
+//				if(!PTT_CALL){
+//					process_WR(SMUTE);								// toggle smute button on PTT edge if P0.6 == GND
+//				}
 				ptt_edge = d;
 				if(d){												// PTT input is ground true
 					MMUTE_N = MUTE_BIT;								// PTT released
@@ -571,11 +579,10 @@ static	data	 U8		softptt;		// soft ptt detected
 					MMUTE_N = UNMUTE_BIT;
 				}
 			}
-			d = '\0';
 
 			if(got_hmd()){											// trap keys
 				new_events = KEYHM_CHNG;
-				dbounceHM_tmr = 150;
+				dbounceHM_tmr = HM_DEBOUNCE;
 			}
 			if(dbounceHM_tmr == 0){
 				if(keyh_mem != KEY_NULL){							// trap debounce timeouts
@@ -586,10 +593,14 @@ static	data	 U8		softptt;		// soft ptt detected
 				press_timer = MS1650;								// reset DTMF timer anytime a tone is being generated
 			}
 			if(press_flag){											// keypress timeout, enable mic
+				if(d){												// if no GPIO PTT, unkey
+					outbit(PTT, 0);
+				}
 				press_flag = 0;
 				PCA0CPM2 |= 0x40;									// fn led back on (ECOM);
 				MMUTE_N = UNMUTE_BIT;								// unmute mic
 			}
+			d = '\0';
 			// this branch handles key-driven events
 			if(new_events & KEYHM_CHNG){							// process trapped events
 				if(!softptt){
@@ -601,14 +612,18 @@ static	data	 U8		softptt;		// soft ptt detected
 								PCA0CPM2 |= 0x40;					// led back on if no tone (ECOM);
 							}
 							aflag = 0;								// release accum inhibit
+							i = 0;									// set release keypress
 							i = keyh_mem | 0x80;					// set release keypress
-							process_WR(K_REL);						// release key to remote host
+//							process_WR(K_REL);						// release key to remote host
 						}
 						keyh_mem = KEY_NULL;						// if no key, clear current key mem.
 					}
 				}
 				si = get_hmd();										// get hm-133/151 data word
 				dp = get_hmcode(si);								// do key-code lookup, pointer is set to keycode array
+#if DBUG == 1
+				put_hmcode(si);			// DEBUG !!!
+#endif
 				d = *(dp + HM_IDX_CODE);
 
 				if(*(dp + HM_IDX_STAT) & HM_1STKEY){
@@ -626,7 +641,7 @@ static	data	 U8		softptt;		// soft ptt detected
 						i = d;
 						keyh_mem = KEY_NULL;
 					}else{
-						dbounceHM_tmr = 150;						// reset loss-of-key detect timer
+						dbounceHM_tmr = HM_DEBOUNCE;				// reset loss-of-key detect timer
 						if(d && (d != keyh_mem)){					// if mic data is not null AND key mem is null:
 							keyh_mem = d;							// save key to mem (first key)
 							i = d;
@@ -681,21 +696,24 @@ static	data	 U8		softptt;		// soft ptt detected
 						}
 					}
 				}else{
-					switch(i){
+//					process_WR(i);							// send button message
+					if((i > '@') && (i < 'z')) j = 1;
+					else j = i;
+					switch(j){
 						// process top function buttons (non-dtmf)
-						case 'L':
-						case 'T':
-						case 'X':
 						case '/':
-						case 'V':
-						case 'M':
-						case '\\':
-						case 'F':
-						case 'G':
+						case '|':
+						case '!':
+						case '+':
+						case '$':
+						case 1:
 							process_WR(i);							// send digit message							
 							break;
 						
 						default:
+							if(i & 0x80){
+								process_WR(K_REL);					// release key to remote host
+							}
 							break;
 					}
 				} // end "key processing" branch
@@ -891,21 +909,57 @@ static idata char	hm_rtn[3];	// holding array for code and status data
 	}else{
 		if(ii != 0xffff){
 			i = 0;
-			do{
-				if(ii == key_addr[i]){	
-					hm_rtn[HM_IDX_CODE] = key_code[i];			// look for match in fn LUT
-					di = i;
-				}
-			}while((hm_rtn[HM_IDX_CODE] == KEY_NULL) && key_addr[++i]);	// loop exits when match or end of LUT
+			if(hm_rtn[HM_IDX_STAT] & HM_FNKEY){
+				do{
+					if(ii == key_addr[i]){	
+						hm_rtn[HM_IDX_CODE] = fnkey_code[i];			// look for match in fn LUT
+						di = i;
+					}
+				}while((hm_rtn[HM_IDX_CODE] == KEY_NULL) && fnkey_addr[++i]);	// loop exits when match or end of LUT
+			}else{
+				do{
+					if(ii == key_addr[i]){	
+						hm_rtn[HM_IDX_CODE] = key_code[i];			// look for match in fn LUT
+						di = i;
+					}
+				}while((hm_rtn[HM_IDX_CODE] == KEY_NULL) && key_addr[++i]);	// loop exits when match or end of LUT
+			}
 			if(hm_rtn[HM_IDX_CODE] == KEY_NULL){
 				sys_error_flags |= HM_DATA_ERR;
 			}
-			hm_rtn[HM_IDX_DTMF] = di - DTMF_OFFS;
+			if(!(hm_rtn[HM_IDX_STAT] & HM_FNKEY)){
+				hm_rtn[HM_IDX_DTMF] = di - DTMF_OFFS;
+			}
 		}
 	}
 	return hm_rtn;
 }
 
+#if DBUG == 1
+//-----------------------------------------------------------------------------
+// put_hmcode() sends 32b code to UART
+//	!!! FOR DEBUG ONLY !!!
+//-----------------------------------------------------------------------------
+void put_hmcode(U32 keym){
+	U8	i; // temp
+
+	putss("[");
+	i = (U8)(keym >> 24);
+	putch(hiasc(i));
+	putch(lowasc(i));
+	i = (U8)(keym >> 16);
+	putch(hiasc(i));
+	putch(lowasc(i));
+	i = (U8)(keym >> 8);
+	putch(hiasc(i));
+	putch(lowasc(i));
+	i = (U8)(keym);
+	putch(hiasc(i));
+	putch(lowasc(i));
+	putss("]");
+	return;
+}
+#endif
 //-----------------------------------------------------------------------------
 // wr_timeout() sets or reads the wired remote "key hold" pacing timer
 //	if param = 0, return FALSE if timer == 0, else true
@@ -1140,8 +1194,12 @@ void Timer1_ISR(void) interrupt 3 using 2
 //-----------------------------------------------------------------------------
 //
 // Called when timer 2 overflows (NORM mode):
-//      updates app timers @ 10ms rate
-//		rate = (sysclk/12) / (65536 - TH:L)
+//		Runs at Fsamp rate with prescalers to produce app timers
+//      drives DDS & updates app timers @ 1ms rate
+//		rate = (sysclk) / (65536 - TH:L)
+//			 = 24500000 / (65536 - 0xfc00) = 24500000 / (65536 - 64512)
+//			 = 23.93 KHz
+//		/ T2_MS1PS = 957 Hz = 1/1.05 ms (app timer update rate)
 //
 //-----------------------------------------------------------------------------
 

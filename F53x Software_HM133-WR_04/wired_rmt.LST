@@ -1,4 +1,4 @@
-C51 COMPILER V9.55   WIRED_RMT                                                             06/27/2022 22:15:58 PAGE 1   
+C51 COMPILER V9.55   WIRED_RMT                                                             06/30/2022 20:47:16 PAGE 1   
 
 
 C51 COMPILER V9.55, COMPILATION OF MODULE WIRED_RMT
@@ -62,26 +62,26 @@ line level    source
   53   1      static volatile U8              klast;                  // last key
   54   1      //                      U8              r;                              // temp
   55   1      
-C51 COMPILER V9.55   WIRED_RMT                                                             06/27/2022 22:15:58 PAGE 2   
+C51 COMPILER V9.55   WIRED_RMT                                                             06/30/2022 20:47:16 PAGE 2   
 
   56   1      
   57   1              if(cmd == STATE_INIT){                                                  // initialize BT
   58   2                      wr_timeout(0);
-  59   2                      bstate = STATE_0;
+  59   2                      bstate = STATE_IDLE;
   60   2                      check_state = 0;
   61   2                      init_buff();                                                            // clean out serial buffer
   62   2                      klast = '\0';
-  63   2                      return 0xff;
-  64   2              }
-  65   1              //
-  66   1              // wired-remote state machine
+  63   2                      putss(REV_STR);
+  64   2                      wait(20);
+  65   2                      return 0xff;
+  66   2              }
   67   1              //
-  68   1              if(cmd == klast) cmd = K_HOLD;
-  69   1              switch(bstate){
-  70   2                      default:                                                                        // error state ... init the machine
-  71   2                      case STATE_0:                                                           // INIT $$$
-  72   2                              putss("#RC900_WRDv0.0%\r");
-  73   2                              wait(20);
+  68   1              // wired-remote state machine
+  69   1              //
+  70   1              if(cmd == klast) cmd = K_HOLD;
+  71   1              switch(bstate){
+  72   2                      default:                                                                        // error state ... init the machine
+  73   2                      case STATE_0:                                                           // INIT $$$
   74   2                              bstate = STATE_IDLE;
   75   2                              break;
   76   2      
@@ -126,7 +126,7 @@ line level    source
  115   3                              }
  116   2                              break;
  117   2                      }
-C51 COMPILER V9.55   WIRED_RMT                                                             06/27/2022 22:15:58 PAGE 3   
+C51 COMPILER V9.55   WIRED_RMT                                                             06/30/2022 20:47:16 PAGE 3   
 
  118   1              return 0xff;
  119   1      }
@@ -151,7 +151,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    360    ----
+   CODE SIZE        =    361    ----
    CONSTANT SIZE    =     17    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

@@ -177,8 +177,8 @@
       <MemoryWindow4>
         <Mm>
           <WinNumber>4</WinNumber>
-          <SubType>8</SubType>
-          <ItemText>i:0xa0</ItemText>
+          <SubType>0</SubType>
+          <ItemText>i:0x84</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow4>

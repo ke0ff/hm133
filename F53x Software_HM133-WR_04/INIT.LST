@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  INIT                                                                 06/27/2022 22:15:57 PAGE     1
+A51 MACRO ASSEMBLER  INIT                                                                 06/30/2022 20:47:14 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02c
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                       55     ;
                       56     ;</h>
                       57     ;------------------------------------------------------------------------------
-A51 MACRO ASSEMBLER  INIT                                                                 06/27/2022 22:15:57 PAGE     2
+A51 MACRO ASSEMBLER  INIT                                                                 06/30/2022 20:47:14 PAGE     2
 
                       58     ;
                       59     ;<h>  Dallas 390,400 and 5240 CPU Contiguous Mode
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
 0021 540F            136                     ANL     A,#00FH
 0023 4420            137                     ORL     A,#20H          ; Bit Address
 0025 C8              138                     XCH     A,R0            ; convert to Byte Addressen
-A51 MACRO ASSEMBLER  INIT                                                                 06/27/2022 22:15:57 PAGE     3
+A51 MACRO ASSEMBLER  INIT                                                                 06/30/2022 20:47:14 PAGE     3
 
 0026 83              139                     MOVC    A,@A+PC
 0027 4004            140     LoadTab:        JC      Setzen
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
                                              MOVC    A,@A+DPTR
                                              MOV     R1,A
                                              INC     DPTR
-A51 MACRO ASSEMBLER  INIT                                                                 06/27/2022 22:15:57 PAGE     4
+A51 MACRO ASSEMBLER  INIT                                                                 06/30/2022 20:47:14 PAGE     4
 
                              HLOOP:          CLR     A
                                              MOVC    A,@A+DPTR
@@ -269,7 +269,7 @@ LOC  OBJ            LINE     SOURCE
                      270     
 ----                 271                     RSEG    ?C_INITSEG
 0000 00              272                     DB      0
-A51 MACRO ASSEMBLER  INIT                                                                 06/27/2022 22:15:57 PAGE     5
+A51 MACRO ASSEMBLER  INIT                                                                 06/30/2022 20:47:14 PAGE     5
 
                      273     
                      274     ;-------------------------------------------------------------------------
@@ -326,7 +326,7 @@ LOC  OBJ            LINE     SOURCE
                      325     
                      326                     END
                              
-A51 MACRO ASSEMBLER  INIT                                                                 06/27/2022 22:15:57 PAGE     6
+A51 MACRO ASSEMBLER  INIT                                                                 06/30/2022 20:47:14 PAGE     6
 
 SYMBOL TABLE LISTING
 ------ ----- -------

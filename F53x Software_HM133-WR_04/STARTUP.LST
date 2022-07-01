@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  STARTUP                                                              06/27/2022 22:15:57 PAGE     1
+A51 MACRO ASSEMBLER  STARTUP                                                              06/30/2022 20:47:13 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02c
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                       56     ; <h> Stack Space for reentrant functions in the SMALL model.
                       57     ;  <q> IBPSTACK: Enable SMALL model reentrant stack
                       58     ;     <i> Stack space for reentrant functions in the SMALL model.
-A51 MACRO ASSEMBLER  STARTUP                                                              06/27/2022 22:15:57 PAGE     2
+A51 MACRO ASSEMBLER  STARTUP                                                              06/30/2022 20:47:13 PAGE     2
 
   0000                59     IBPSTACK        EQU     0       ; set to 1 if small reentrant is used.
                       60     ;  <o> IBPSTACKTOP: End address of SMALL model stack <0x0-0xFF>
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
 0000                 122                     DS      44
                      123     
                      124                     EXTRN CODE (?C_START)
-A51 MACRO ASSEMBLER  STARTUP                                                              06/27/2022 22:15:57 PAGE     3
+A51 MACRO ASSEMBLER  STARTUP                                                              06/30/2022 20:47:13 PAGE     3
 
                      125                     PUBLIC  ?C_STARTUP
                      126     
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
                      188     
                      189     ; This code is required if you use L51_BANK.A51 with Banking Mode 4
                      190     ;<h> Code Banking
-A51 MACRO ASSEMBLER  STARTUP                                                              06/27/2022 22:15:57 PAGE     4
+A51 MACRO ASSEMBLER  STARTUP                                                              06/30/2022 20:47:13 PAGE     4
 
                      191     ; <q> Select Bank 0 for L51_BANK.A51 Mode 4
                      192     
@@ -215,7 +215,7 @@ LOC  OBJ            LINE     SOURCE
 0013 020000   F      200                     LJMP    ?C_START
                      201     
                      202                     END
-A51 MACRO ASSEMBLER  STARTUP                                                              06/27/2022 22:15:57 PAGE     5
+A51 MACRO ASSEMBLER  STARTUP                                                              06/30/2022 20:47:13 PAGE     5
 
 SYMBOL TABLE LISTING
 ------ ----- -------

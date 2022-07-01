@@ -56,10 +56,12 @@ static volatile	U8		klast;			// last key
 
 	if(cmd == STATE_INIT){							// initialize BT
 		wr_timeout(0);
-		bstate = STATE_0;
+		bstate = STATE_IDLE;
 		check_state = 0;
 		init_buff();								// clean out serial buffer
 		klast = '\0';
+		putss(REV_STR);
+		wait(20);
 		return 0xff;
 	}
 	//
@@ -69,8 +71,6 @@ static volatile	U8		klast;			// last key
 	switch(bstate){
 		default:									// error state ... init the machine
 		case STATE_0:								// INIT $$$
-			putss("#RC900_WRDv0.0%\r");
-			wait(20);
 			bstate = STATE_IDLE;
 			break;
 

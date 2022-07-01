@@ -24,6 +24,7 @@
 #define INIT_H
 #endif
 
+#define	REV_STR	"#RC900_WRDv0.1%\r"
 //-----------------------------------------------------------------------------
 // Global Constants
 //-----------------------------------------------------------------------------
@@ -63,6 +64,8 @@
 #define	HM_IDX_DTMF		0x02
 #define	PTT_CODE		';'				// HM-133 PTT keycode
 #define HMKEY_HOLD_CNT	40				// hm-151 keypad hold timer value (~~ 2sec)
+//#define HM_DEBOUNCE		150
+#define HM_DEBOUNCE		75
 
 // PCA timer constants
 #define	PCACLK	(SYSCLK / 4L)
